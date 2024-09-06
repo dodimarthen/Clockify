@@ -10,15 +10,16 @@ const OnBoardScreen = ({ navigation }) => {
   const [pressed, setPressed] = useState(false);
   return (
     <SafeAreaView>
-      <View className="flex-1 bg-custom-black justify-center items-center min-h-screen">
+      <View className="flex-1 bg-custom-white justify-center items-center min-h-screen">
         <Text
-          className="text-3xl mb-2 text-custom-white font-semibold"
+          className="text-2xl mb-2 text-custom-black font-semibold mt-1 mb-0"
           style={{
             fontFamily: fontsLoaded ? "Roboto-Bold" : "System",
           }}
         >
-          Welcome To Clockify!
+          Welcome To
         </Text>
+        <Image source={require("../assets/Group 6.png")} className="mb-4" />
 
         <Image
           source={require("../assets/img/apb.png")}
