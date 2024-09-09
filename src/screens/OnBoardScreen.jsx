@@ -12,7 +12,7 @@ const OnBoardScreen = ({ navigation }) => {
     <SafeAreaView>
       <View className="flex-1 bg-custom-white justify-center items-center min-h-screen">
         <Text
-          className="text-2xl mb-2 text-custom-black font-semibold mt-1 mb-0"
+          className="text-2xl text-custom-blue font-semibold mt-1 mb-0"
           style={{
             fontFamily: fontsLoaded ? "Roboto-Bold" : "System",
           }}
@@ -30,7 +30,7 @@ const OnBoardScreen = ({ navigation }) => {
           onPress={() => navigation.navigate("Details")}
           onPressIn={() => setPressed(true)}
           onPressOut={() => setPressed(false)}
-          className={`items-center justify-center py-3 px-8 rounded-lg bg-custom-blue ${
+          className={`items-center justify-center py-3 px-5 rounded-xl bg-custom-blue ${
             pressed ? "opacity-40" : "opacity-200"
           }`}
         >
