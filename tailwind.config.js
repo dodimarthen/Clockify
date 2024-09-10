@@ -7,7 +7,7 @@ module.exports = {
         "custom-pink": "#E78895",
         "custom-white": "#F0EEED",
         "custom-black": "#0F0E0E",
-        "custom-blue": "#295F98",
+        "custom-blue": "#244BC5",
       },
     },
   },
