@@ -36,6 +36,7 @@ const LoginScreen = ({ navigation }) => {
           >
             Sign in To Your Account
           </Text>
+          <Image source={require("../assets/img/smallicons.png")} />
         </View>
         <View className="w-full px-8 mt-10">
           {/* Username Container */}
@@ -89,9 +90,7 @@ const LoginScreen = ({ navigation }) => {
             <Pressable
               onPressIn={() => setPressedForgotPassword(true)}
               onPressOut={() => setPressedForgotPassword(false)}
-              onPress={() => {
-                console.log("Forgot password clicked!");
-              }}
+              onPress={() => navigation.navigate("ForgetPassword")}
               className={`items-center justify-center py-3 px-5 rounded-xl ${
                 pressedForgotPassword ? "opacity-30" : "opacity-100"
               }`}

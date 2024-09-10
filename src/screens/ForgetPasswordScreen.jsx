@@ -1,4 +1,4 @@
-// screens/DetailsScreen.js
+// screens/ForgetPasswordScreen.js
 
 import { View, Text, TextInput, Pressable, Image } from "react-native";
 import { useFonts } from "expo-font";
@@ -10,12 +10,11 @@ const ForgetPasswordScreen = ({ navigation }) => {
   const [fontsLoaded] = useFonts({
     "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
   });
-  const [pressedLogin, setPressedLogin] = useState(false);
   const [pressedForgotPassword, setPressedForgotPassword] = useState(false);
 
   return (
     <SafeAreaView>
-      <View className="flex-1 bg-custom-blue items-center justify-center min-h-screen">
+      <View className="flex-1 bg-custom-blue justify-center min-h-screen">
         <Image
           source={require("../assets/img/Vector.png")}
           className="h-64 w-64"
@@ -29,16 +28,24 @@ const ForgetPasswordScreen = ({ navigation }) => {
 
         <View className="mt-5">
           <Text
-            className="text-2xl text-custom-white font-semibold mt-40 mb-0"
+            className="text-3xl text-custom-white font-semibold text-left ml-8"
             style={{
               fontFamily: fontsLoaded ? "Roboto-Bold" : "System",
             }}
           >
-            Forgot Password
+            Forgot Password?
           </Text>
         </View>
+
+        <View>
+          <Text className="text-custom-white text-left ml-8 text-xs">
+            Don't worry! It happens sometimes. {"\n"}Please enter your
+            registered email.
+          </Text>
+        </View>
+
         <View className="w-full px-8 mt-2">
-          {/* Username Container */}
+          {/* Email Container */}
           <View className="mt-2">
             <Text className="text-s text-custom-white mb-2 font-bold">
               Email
@@ -50,14 +57,14 @@ const ForgetPasswordScreen = ({ navigation }) => {
             />
           </View>
 
-          {/* Login Button */}
+          {/* Forgot Password Button */}
           <View className="mt-6">
             <Pressable
-              onPress={() => console.log("Button login clicked")}
-              onPressIn={() => setPressedLogin(true)}
-              onPressOut={() => setPressedLogin(false)}
+              onPress={() => console.log("Continue button clicked")}
+              onPressIn={() => setPressedForgotPassword(true)}
+              onPressOut={() => setPressedForgotPassword(false)}
               className={`items-center justify-center py-3 px-5 rounded-xl bg-custom-white ${
-                pressedLogin ? "opacity-30" : "opacity-100"
+                pressedForgotPassword ? "opacity-30" : "opacity-100"
               }`}
             >
               <Text

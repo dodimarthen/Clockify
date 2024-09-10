@@ -5,7 +5,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import OnBoardScreen from "../screens/OnBoardScreen";
 import LoginScreen from "../screens/LoginScreen";
 import DashboardScreen from "../screens/DashboardScreen";
-import HomeScreen from "../screens/Homescreen";
 import SettingsScreen from "../screens/SettingScreen";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ForgetPasswordScreen from "../screens/ForgetPasswordScreen";
@@ -53,7 +52,7 @@ function MyTabs() {
 
 const AppNavigator = () => (
   <Stack.Navigator
-    initialRouteName="ForgetPassword"
+    initialRouteName="OnBoard"
     screenOptions={{ headerShown: false }}
   >
     <Stack.Screen name="MyTabs" component={MyTabs} />
