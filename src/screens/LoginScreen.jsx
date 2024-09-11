@@ -1,10 +1,8 @@
-// screens/LoginScreen.js
-
 import { View, Text, TextInput, Pressable, Image } from "react-native";
 import { useFonts } from "expo-font";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign, Entypo } from "@expo/vector-icons";
 
 const LoginScreen = ({ navigation }) => {
   const [fontsLoaded] = useFonts({
@@ -15,6 +13,7 @@ const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   const sampleCredentials = {
     username: "johndoe@gmail.com",
@@ -23,12 +22,10 @@ const LoginScreen = ({ navigation }) => {
 
   useEffect(() => {
     if (loginError) {
-      // Set a timer to clear the error message after 5 seconds
       const timer = setTimeout(() => {
         setLoginError("");
       }, 2000);
 
-      // Clear the timer if the component unmounts or error changes
       return () => clearTimeout(timer);
     }
   }, [loginError]);
@@ -38,10 +35,8 @@ const LoginScreen = ({ navigation }) => {
       username === sampleCredentials.username &&
       password === sampleCredentials.password
     ) {
-      // Navigate to DashboardScreen on successful login
       navigation.navigate("Dashboard");
     } else {
-      // Set login error message
       setLoginError("Invalid username or password");
     }
   };
@@ -71,6 +66,7 @@ const LoginScreen = ({ navigation }) => {
           </Text>
           <Image source={require("../assets/img/smallicons.png")} />
         </View>
+
         <View className="w-full px-8 mt-10">
           {/* Username Container */}
           <View className="mt-10 ">
@@ -78,7 +74,7 @@ const LoginScreen = ({ navigation }) => {
               Username
             </Text>
             <TextInput
-              className="border border-gray-300 rounded-lg px-4 py-2 w-full"
+              className="border border-gray-300 rounded-lg px-4 py-2 w-full text-white"
               placeholder="example@gmail.com"
               placeholderTextColor="#F1EFEF"
               value={username}
@@ -87,18 +83,27 @@ const LoginScreen = ({ navigation }) => {
           </View>
 
           {/* Password Container */}
-          <View className="mt-4">
-            <Text className="text-s text-custom-white mb-2 font-bold">
-              Password
-            </Text>
+          <View className="mt-4 relative">
+            <Text className="text-s mb-2 font-bold text-white">Password</Text>
             <TextInput
-              className="border border-gray-300 rounded-lg px-4 py-2 w-full"
+              className="border border-gray-300 rounded-lg px-4 py-2 w-full text-custom-white"
               placeholder="********"
               placeholderTextColor="#F1EFEF"
-              secureTextEntry
+              secureTextEntry={!passwordVisible}
               value={password}
               onChangeText={setPassword}
             />
+
+            <Pressable
+              onPress={() => setPasswordVisible(!passwordVisible)}
+              style={{ position: "absolute", right: 10, top: 38 }}
+            >
+              <Entypo
+                name={passwordVisible ? "eye-with-line" : "eye"}
+                size={18}
+                color="white"
+              />
+            </Pressable>
           </View>
 
           {/* Login Button */}
