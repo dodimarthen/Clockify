@@ -1,8 +1,8 @@
-// screens/DetailsScreen.js
+// screens/LoginScreen.js
 
 import { View, Text, TextInput, Pressable, Image } from "react-native";
 import { useFonts } from "expo-font";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -12,6 +12,39 @@ const LoginScreen = ({ navigation }) => {
   });
   const [pressedLogin, setPressedLogin] = useState(false);
   const [pressedForgotPassword, setPressedForgotPassword] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState("");
+
+  const sampleCredentials = {
+    username: "johndoe@gmail.com",
+    password: "123",
+  };
+
+  useEffect(() => {
+    if (loginError) {
+      // Set a timer to clear the error message after 5 seconds
+      const timer = setTimeout(() => {
+        setLoginError("");
+      }, 2000);
+
+      // Clear the timer if the component unmounts or error changes
+      return () => clearTimeout(timer);
+    }
+  }, [loginError]);
+
+  const handleLogin = () => {
+    if (
+      username === sampleCredentials.username &&
+      password === sampleCredentials.password
+    ) {
+      // Navigate to DashboardScreen on successful login
+      navigation.navigate("Dashboard");
+    } else {
+      // Set login error message
+      setLoginError("Invalid username or password");
+    }
+  };
 
   return (
     <SafeAreaView>
@@ -48,6 +81,8 @@ const LoginScreen = ({ navigation }) => {
               className="border border-gray-300 rounded-lg px-4 py-2 w-full"
               placeholder="example@gmail.com"
               placeholderTextColor="#F1EFEF"
+              value={username}
+              onChangeText={setUsername}
             />
           </View>
 
@@ -61,13 +96,15 @@ const LoginScreen = ({ navigation }) => {
               placeholder="********"
               placeholderTextColor="#F1EFEF"
               secureTextEntry
+              value={password}
+              onChangeText={setPassword}
             />
           </View>
 
           {/* Login Button */}
           <View className="mt-6">
             <Pressable
-              onPress={() => console.log("Button login clicked")}
+              onPress={handleLogin}
               onPressIn={() => setPressedLogin(true)}
               onPressOut={() => setPressedLogin(false)}
               className={`items-center justify-center py-3 px-5 rounded-xl bg-custom-white ${
@@ -84,6 +121,13 @@ const LoginScreen = ({ navigation }) => {
               </Text>
             </Pressable>
           </View>
+
+          {/* Error Message */}
+          {loginError ? (
+            <Text className="text-custom-white text-center mt-2">
+              {loginError}
+            </Text>
+          ) : null}
 
           {/* Forget Password Button */}
           <View className="mt-1">
