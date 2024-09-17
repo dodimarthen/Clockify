@@ -1,8 +1,7 @@
 import { View, Text, TextInput, Pressable, Image } from "react-native";
 import { useFonts } from "expo-font";
 import React, { useState, useEffect } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { AntDesign, Entypo } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 
 const LoginScreen = ({ navigation }) => {
   const [fontsLoaded] = useFonts({
