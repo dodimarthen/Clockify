@@ -1,8 +1,9 @@
-import { View, Text, Image } from "react-native";
-import { useFonts } from "expo-font";
 import React from "react";
+import { View, Text } from "react-native";
+import { Avatar } from "react-native-paper";
+import { Ionicons } from "@expo/vector-icons"; // Import Ionicons
+import { useFonts } from "expo-font";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Card, Button } from "react-native-paper";
 
 const DashboardScreen = () => {
   const [fontsLoaded] = useFonts({
@@ -10,30 +11,26 @@ const DashboardScreen = () => {
   });
 
   if (!fontsLoaded) {
-    return null; // Render nothing until the fonts are loaded
+    return null;
   }
 
   return (
-    <SafeAreaView className="flex-1 px-4 mt-6">
-      <View className="flex-row justify-between mb-6">
-        <View>
-          <Text className="text-base font-light text-black">Welcome Back,</Text>
-          <Text className="text-3xl font-bold text-black">User!</Text>
+    <SafeAreaView className="bg-custom-white">
+      <View className="flex-row items-center p-6 bg-custom-white">
+        <Avatar.Image
+          size={50}
+          source={{
+            uri: "https://avatars0.githubusercontent.com/u/32242596?s=460&u=1ea285743fc4b083f95d6ee0be2e7bb8dcfc676e&v=4", // Replace with your image URL or local asset
+          }}
+        />
+        <View className="ml-4">
+          <Text className="text-lg font-bold">John Doe</Text>
+          <Text className="text-sm text-gray-500">Software Engineer</Text>
         </View>
-      </View>
 
-      <View className="mt-2 items-center">
-        <Card className="h-60 w-60">
-          <Card.Title title="Your Clock In Time" className="mt-1" />
-          <Card.Content>
-            <View className="relative items-center mt-8 mb-20">
-              <Text>Clock In Time</Text>
-            </View>
-          </Card.Content>
-          <Card.Actions>
-            <Button>Click me!</Button>
-          </Card.Actions>
-        </Card>
+        <View className="ml-auto">
+          <Ionicons name="notifications-outline" size={30} color="black" />
+        </View>
       </View>
     </SafeAreaView>
   );
