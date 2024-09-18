@@ -18,18 +18,18 @@ const DashboardScreen = () => {
     <SafeAreaView className="bg-custom-white">
       <View className="flex-row items-center p-6 bg-custom-white">
         <Avatar.Image
-          size={50}
+          size={55}
           source={{
             uri: "https://avatars0.githubusercontent.com/u/32242596?s=460&u=1ea285743fc4b083f95d6ee0be2e7bb8dcfc676e&v=4", // Replace with your image URL or local asset
           }}
         />
         <View className="ml-4">
-          <Text className="text-lg font-bold">John Doe</Text>
-          <Text className="text-sm text-gray-500">Software Engineer</Text>
+          <Text className="text-lg font-extrabold">John Doe</Text>
+          <Text className="text-base text-gray-500">Software Engineer</Text>
         </View>
 
         <View className="ml-auto">
-          <Ionicons name="notifications-outline" size={30} color="black" />
+          <Ionicons name="notifications-outline" size={32} color="black" />
         </View>
       </View>
     </SafeAreaView>
