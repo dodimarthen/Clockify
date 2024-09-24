@@ -4,6 +4,7 @@ import { Avatar } from "react-native-paper";
 import { useFonts } from "expo-font";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CalendarComponent from "../components/Calendar/Calendar";
+import CardForAttendance from "../components/Calendar/CardForAttendance";
 
 const DashboardScreen = () => {
   const [fontsLoaded] = useFonts({
@@ -48,44 +49,30 @@ const DashboardScreen = () => {
         <Text className="text-left font-bold text-md">Today Attendance</Text>
         <View className="flex-row justify-between p-4 mt-1">
           {/* Check In Card */}
-          <View className="bg-white rounded-2xl p-4 w-[45%]">
-            <TouchableOpacity onPress={() => setIsCheckedIn(!isCheckedIn)}>
-              <View className="flex-row items-center mb-2">
-                {/* Icon beside the text */}
-                <View className="bg-[#41B3A2] p-2 rounded-xl mr-2">
-                  <Image
-                    source={require("../assets/img/login.png")}
-                    style={{ width: 18, height: 18 }}
-                    resizeMode="contain"
-                  />
-                </View>
-                <Text className="text-gray-700 font-bold">Check In</Text>
-              </View>
-              <Text className="text-gray-500 text-left mt-2">
-                {isCheckedIn ? checkInTime : "On Time"}
-              </Text>
-            </TouchableOpacity>
-          </View>
+          <CardForAttendance
+            title="Check In"
+            iconSource={require("../assets/img/login.png")}
+            backgroundColor="#41B3A2"
+            time={checkInTime}
+            defaultText="On Time"
+            isChecked={isCheckedIn}
+            children="08:45 am"
+            onPress={() => setIsCheckedIn(!isCheckedIn)}
+            marginRight="mr-2"
+          />
 
           {/* Check Out Card */}
-          <View className="bg-white p-4 w-[45%] mr-4 rounded-2xl ">
-            <TouchableOpacity onPress={() => setIsCheckedOut(!isCheckedOut)}>
-              <View className="flex-row items-center mb-2 ">
-                {/* Icon beside the text */}
-                <View className="bg-[#0000FF80] p-2 rounded-xl mr-2">
-                  <Image
-                    source={require("../assets/img/logout.png")}
-                    style={{ width: 18, height: 18 }}
-                    resizeMode="contain"
-                  />
-                </View>
-                <Text className="text-gray-700 font-bold">Check Out</Text>
-              </View>
-              <Text className="text-gray-500 text-left mt-2">
-                {isCheckedOut ? checkOutTime : "Go Home"}
-              </Text>
-            </TouchableOpacity>
-          </View>
+          <CardForAttendance
+            title="Check Out"
+            iconSource={require("../assets/img/logout.png")}
+            backgroundColor="#0000FF80"
+            time={checkOutTime}
+            defaultText="Go Home"
+            isChecked={isCheckedOut}
+            children="17:00 pm"
+            onPress={() => setIsCheckedOut(!isCheckedOut)}
+            marginLeft="mr-4"
+          />
         </View>
       </View>
     </SafeAreaView>
