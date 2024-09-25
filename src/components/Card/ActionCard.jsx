@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 
-const CardForAttendance = ({
+const ActionCard = ({
   title,
   iconSource,
   backgroundColor,
@@ -38,4 +38,4 @@ const CardForAttendance = ({
   );
 };
 
-export default CardForAttendance;
+export default ActionCard;
