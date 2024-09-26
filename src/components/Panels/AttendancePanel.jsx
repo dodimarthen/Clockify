@@ -45,7 +45,7 @@ const AttendancePanel = () => {
         <ActionCard
           title="Break Time"
           iconSource={require("../../assets/img/cup.png")}
-          backgroundColor="#FFB7B7"
+          backgroundColor="#FBF6EE"
           time={breakTime}
           defaultText="Happy lunch!"
           isChecked={isBreakTime}
