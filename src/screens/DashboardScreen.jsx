@@ -6,6 +6,7 @@ import CalendarComponent from "../components/Calendar/Calendar";
 import AttendancePanel from "../components/Panels/AttendancePanel";
 import Header from "../components/Header/Header";
 import AttendanceRecord from "../components/Panels/AttendanceRecord";
+import SwipeToCheckIn from "../components/SwipeButton/SwipeButton";
 
 const DashboardScreen = () => {
   const [fontsLoaded] = useFonts({
@@ -22,7 +23,7 @@ const DashboardScreen = () => {
     console.log("Card pressed!");
   };
   if (!fontsLoaded) {
-    return null; // Or a loading spinner
+    return null;
   }
 
   return (
@@ -63,6 +64,9 @@ const DashboardScreen = () => {
             iconSource={require("../assets/img/logout.png")}
             bgColor="bg-custom-yellow"
           />
+        </View>
+        <View>
+          <SwipeToCheckIn />
         </View>
       </SafeAreaView>
     </ScrollView>
