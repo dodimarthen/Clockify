@@ -6,9 +6,9 @@ const AttendancePanel = () => {
   const [isCheckedIn, setIsCheckedIn] = React.useState(false);
   const [isCheckedOut, setIsCheckedOut] = React.useState(false);
   const [isBreakTime, setIsBreakTime] = React.useState(false);
-  const checkInTime = "08:45 AM";
-  const checkOutTime = "05:00 PM";
-  const breakTime = "12:00 PM";
+  const checkInTime = "You are on time!";
+  const checkOutTime = "Have a good rest!";
+  const breakTime = "Click me!";
   return (
     <>
       <View className="flex-row flex-wrap justify-between p-4 mt-1 mr-6 ml-2">
@@ -18,7 +18,7 @@ const AttendancePanel = () => {
           iconSource={require("../../assets/img/login.png")}
           backgroundColor="#41B3A2"
           time={checkInTime}
-          defaultText="On Time"
+          defaultText="Click Me"
           isChecked={isCheckedIn}
           children="08:45 am"
           onPress={() => setIsCheckedIn(!isCheckedIn)}
@@ -31,7 +31,7 @@ const AttendancePanel = () => {
           iconSource={require("../../assets/img/logout.png")}
           backgroundColor="#0000FF80"
           time={checkOutTime}
-          defaultText="Go Home"
+          defaultText="Click Me"
           isChecked={isCheckedOut}
           children="17:00 pm"
           onPress={() => setIsCheckedOut(!isCheckedOut)}
@@ -61,7 +61,7 @@ const AttendancePanel = () => {
           backgroundColor="#F0F0F0"
           defaultText="Working Days"
           children="28 Days"
-          onPress={() => setIsCheckedOut(!isCheckedOut)}
+          onPress={() => console.log("Total Days Pressed!")}
           style={{ width: "48%", marginBottom: 20 }}
         />
       </View>
