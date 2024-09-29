@@ -28,7 +28,7 @@ const DashboardScreen = () => {
 
   return (
     <ScrollView>
-      <SafeAreaView className="flex-1 bg-white">
+      <SafeAreaView className="flex-1">
         {/* Header Section */}
         <Header />
         {/* Calendar Section */}
@@ -55,17 +55,15 @@ const DashboardScreen = () => {
             date="April 17, 2024"
             time="08:45 am"
             iconSource={require("../assets/img/login.png")}
-            bgColor="bg-panel-checkedin"
+            bgColor="bg-[#41B06E]"
           />
           <AttendanceRecord
             status="Checked Out"
             date="April 17, 2024"
             time="17:00 pm"
             iconSource={require("../assets/img/logout.png")}
-            bgColor="bg-custom-yellow"
+            bgColor="bg-[#FFB534]"
           />
-        </View>
-        <View>
           <SwipeToCheckIn />
         </View>
       </SafeAreaView>

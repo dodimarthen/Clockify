@@ -4,11 +4,11 @@ import { View, Text, Image } from "react-native";
 
 const AttendanceRecord = ({ status, date, time, iconSource, bgColor }) => {
   return (
-    <View className="bg-white rounded-lg shadow-md p-4 m-2 mr-5 mt-2">
-      <View className="bg-white rounded-md shadow-sm flex-row justify-between items-center">
+    <View className="bg-white rounded-xl shadow-md p-4 m-2 mr-5 mt-2">
+      <View className="bg-white rounded-xl shadow-sm flex-row justify-between items-center">
         <View className="flex-row items-center">
           {/* Image with background box */}
-          <View className={`${bgColor} p-2 rounded-full`}>
+          <View className={`${bgColor} p-2 rounded-lg`}>
             <Image
               source={iconSource}
               style={{ width: 18, height: 18 }}

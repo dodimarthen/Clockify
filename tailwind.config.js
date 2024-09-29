@@ -13,6 +13,7 @@ module.exports = {
         "custom-dark-blue": "#006989",
         "panel-checkedin": "#73EC8B",
         "custom-yellow": "#FFD523",
+        "custom-green": "#697565",
       },
     },
   },

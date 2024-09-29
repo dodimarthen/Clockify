@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { View, Text, Animated, PanResponder } from "react-native";
+import { View, Text, Animated, PanResponder, Image } from "react-native";
 import { useFonts } from "expo-font";
 
 const SwipeToCheckIn = () => {
@@ -38,12 +38,12 @@ const SwipeToCheckIn = () => {
   }
 
   return (
-    <View className="flex-1 justify-center items-center bg-gray-100">
-      <View className="relative w-[350px] h-[60px] bg-blue-500 rounded-lg justify-center">
+    <View className="flex-1 justify-center items-center">
+      <View className="relative w-[370px] h-[60px] bg-[#4682A9] rounded-full justify-center mr-2 mt-5">
         <Animated.View
           {...panResponder.panHandlers}
           style={[pan.getLayout(), { position: "relative", zIndex: 10 }]}
-          className="my-auto w-[50px] h-[50px] bg-white rounded-lg justify-center items-center ml-2"
+          className="my-auto w-[50px] h-[50px] bg-white rounded-full justify-center items-center ml-2"
         >
           <Text
             style={{ fontFamily: "Roboto", fontWeight: "bold" }}
@@ -59,6 +59,13 @@ const SwipeToCheckIn = () => {
         >
           {isCheckedIn ? "Checked In" : "Swipe to Check In"}
         </Text>
+
+        {isCheckedIn && (
+          <Image
+            source={require("../../assets/img/check.png")}
+            style={{ width: 20, height: 20, position: "absolute", right: 10 }}
+          />
+        )}
       </View>
     </View>
   );
