@@ -24,7 +24,7 @@ const Header = () => {
       {/* Notification Icon with background */}
       <View
         style={{ backgroundColor: "rgba(240, 235, 227, 0.25)" }}
-        className="p-2 rounded-full"
+        className="p-2 rounded-full mr-4"
       >
         <MaterialIcons name="notifications-none" size={24} color="black" />
       </View>

@@ -9,6 +9,7 @@ const SwipeToCheckOut = ({ setCheckOutTime, setIsCheckedOut }) => {
 
   const [isCheckedOut, setIsCheckedOutLocal] = useState(false);
   const pan = useRef(new Animated.ValueXY()).current;
+  const opacity = useRef(new Animated.Value(0)).current; // For fade-in effect
 
   const panResponder = useRef(
     PanResponder.create({
@@ -30,7 +31,14 @@ const SwipeToCheckOut = ({ setCheckOutTime, setIsCheckedOut }) => {
             setIsCheckedOutLocal(true);
             setIsCheckedOut(true);
             setCheckOutTime(currentTime);
-            console.log(`Checked out at: ${currentTime}`); // Log message for checkout
+            console.log(`Checked out at: ${currentTime}`);
+
+            // Trigger fade-in animation for the success message
+            Animated.timing(opacity, {
+              toValue: 1,
+              duration: 500, // 500ms for the fade-in effect
+              useNativeDriver: true,
+            }).start();
           });
         } else {
           Animated.spring(pan, {
@@ -48,7 +56,7 @@ const SwipeToCheckOut = ({ setCheckOutTime, setIsCheckedOut }) => {
 
   return (
     <View className="flex-1 justify-center items-center">
-      <View className="relative w-[370px] h-[60px] bg-[#597445] rounded-full justify-center mr-2 mt-3">
+      <View className="relative w-[370px] h-[60px] bg-[#1E3E62] rounded-full justify-center mr-2 mt-3">
         <Animated.View
           {...panResponder.panHandlers}
           style={[pan.getLayout(), { position: "relative", zIndex: 10 }]}
@@ -64,15 +72,24 @@ const SwipeToCheckOut = ({ setCheckOutTime, setIsCheckedOut }) => {
 
         {isCheckedOut ? (
           <>
-            <Text
-              style={{ fontFamily: "Montserrat" }}
+            <Animated.Text
+              style={{
+                fontFamily: "Montserrat",
+                opacity: opacity, // Bind opacity to the animated value
+              }}
               className="absolute w-full text-center text-white font-bold"
             >
               Checked Out Complete!
-            </Text>
-            <Image
+            </Animated.Text>
+            <Animated.Image
               source={require("../../assets/img/check.png")}
-              style={{ width: 20, height: 20, position: "absolute", right: 93 }}
+              style={{
+                width: 20,
+                height: 20,
+                position: "absolute",
+                right: 93,
+                opacity: opacity, // Bind opacity to the animated value
+              }}
             />
           </>
         ) : (
