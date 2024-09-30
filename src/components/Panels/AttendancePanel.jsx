@@ -1,15 +1,17 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import ActionCard from "../Card/ActionCard";
-import SwipeToCheckIn from "../SwipeButton/SwipeButton";
+import SwipeToCheckIn from "../SwipeButton/SwipeButtonCheckIn";
+import SwipeToCheckOut from "../SwipeButton/SwipeButtonCheckOut";
 
 const AttendancePanel = () => {
   const [isCheckedIn, setIsCheckedIn] = React.useState(false);
   const [checkInTime, setCheckInTime] = React.useState(null);
+  const [checkOutTime, setCheckOutTime] = React.useState(null);
   const [isCheckedOut, setIsCheckedOut] = React.useState(false);
   const [isBreakTime, setIsBreakTime] = React.useState(false);
-  const checkOutTime = "Have a good rest!";
   const breakTime = "Click me!";
+
   return (
     <>
       <View className="flex-row flex-wrap justify-between p-4 mt-1 mr-6 ml-2">
@@ -21,7 +23,7 @@ const AttendancePanel = () => {
           time={checkInTime}
           defaultText="Click Me"
           isChecked={isCheckedIn}
-          children=""
+          children="On Time"
           onPress={() => setIsCheckedIn(!isCheckedIn)}
           style={{ width: "48%", marginBottom: 10 }}
         />
@@ -50,7 +52,7 @@ const AttendancePanel = () => {
           time={breakTime}
           defaultText="Happy lunch!"
           isChecked={isBreakTime}
-          children=""
+          children="12:00 - 13:00 PM"
           onPress={() => setIsBreakTime(!isBreakTime)}
           style={{ width: "48%", marginBottom: 10 }}
         />
@@ -66,9 +68,14 @@ const AttendancePanel = () => {
           style={{ width: "48%", marginBottom: 20 }}
         />
       </View>
+
       <SwipeToCheckIn
         setCheckInTime={setCheckInTime} // Pass setCheckInTime function
         setIsCheckedIn={setIsCheckedIn} // Pass setIsCheckedIn function
+      />
+      <SwipeToCheckOut
+        setCheckOutTime={setCheckOutTime}
+        setIsCheckedOut={setIsCheckedOut}
       />
     </>
   );
