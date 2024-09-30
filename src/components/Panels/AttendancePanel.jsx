@@ -12,32 +12,35 @@ const AttendancePanel = () => {
   const [isBreakTime, setIsBreakTime] = React.useState(false);
   const breakTime = "Click me!";
 
+  const handleCheckIn = () => {
+    setCheckInTime(new Date().toLocaleTimeString());
+    setTimeout(() => {
+      setIsCheckedIn(true);
+    }, 3000);
+  };
+
   return (
     <>
       <View className="flex-row flex-wrap justify-between p-4 mt-1 mr-6 ml-2">
-        {/* Check In Card */}
+        {/* Check In Card - Not Clickable */}
         <ActionCard
           title="Check In"
           iconSource={require("../../assets/img/login.png")}
           backgroundColor="#41B3A2"
           time={checkInTime}
-          defaultText="Click Me"
           isChecked={isCheckedIn}
           children="On Time"
-          onPress={() => setIsCheckedIn(!isCheckedIn)}
           style={{ width: "48%", marginBottom: 10 }}
         />
 
-        {/* Check Out Card */}
+        {/* Check Out Card - Not Clickable */}
         <ActionCard
           title="Check Out"
           iconSource={require("../../assets/img/logout.png")}
           backgroundColor="#0000FF80"
           time={checkOutTime}
-          defaultText="Click Me"
           isChecked={isCheckedOut}
-          children=""
-          onPress={() => setIsCheckedOut(!isCheckedOut)}
+          children="You did well!"
           style={{ width: "48%", marginBottom: 10 }}
         />
       </View>
@@ -69,14 +72,20 @@ const AttendancePanel = () => {
         />
       </View>
 
-      <SwipeToCheckIn
-        setCheckInTime={setCheckInTime} // Pass setCheckInTime function
-        setIsCheckedIn={setIsCheckedIn} // Pass setIsCheckedIn function
-      />
-      <SwipeToCheckOut
-        setCheckOutTime={setCheckOutTime}
-        setIsCheckedOut={setIsCheckedOut}
-      />
+      <View className="mt-1">
+        {/* Conditionally render SwipeToCheckIn or SwipeToCheckOut */}
+        {!isCheckedIn ? (
+          <SwipeToCheckIn
+            setCheckInTime={setCheckInTime}
+            setIsCheckedIn={handleCheckIn}
+          />
+        ) : (
+          <SwipeToCheckOut
+            setCheckOutTime={setCheckOutTime}
+            setIsCheckedOut={setIsCheckedOut}
+          />
+        )}
+      </View>
     </>
   );
 };
