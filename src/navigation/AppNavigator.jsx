@@ -1,10 +1,10 @@
-// navigation/AppNavigator.js
+// AppNavigator.js
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import OnBoardScreen from "../screens/OnBoardScreen";
 import LoginScreen from "../screens/LoginScreen";
 import DashboardScreen from "../screens/DashboardScreen";
-import SettingsScreen from "../screens/SettingScreen";
+
 import ForgetPasswordScreen from "../screens/ForgetPasswordScreen";
 
 const Stack = createNativeStackNavigator();
@@ -18,7 +18,6 @@ const AppNavigator = () => (
     <Stack.Screen name="LoginPage" component={LoginScreen} />
     <Stack.Screen name="OnBoard" component={OnBoardScreen} />
     <Stack.Screen name="ForgetPassword" component={ForgetPasswordScreen} />
-    <Stack.Screen name="Settings" component={SettingsScreen} />
   </Stack.Navigator>
 );
 

@@ -56,7 +56,7 @@ const SwipeToCheckOut = ({ setCheckOutTime, setIsCheckedOut }) => {
 
   return (
     <View className="flex-1 justify-center items-center">
-      <View className="relative w-[370px] h-[60px] bg-[#1E3E62] rounded-full justify-center mr-2 mt-3">
+      <View className="relative w-[370px] h-[60px] bg-[#B8001F] rounded-full justify-center mr-2 mt-3">
         <Animated.View
           {...panResponder.panHandlers}
           style={[pan.getLayout(), { position: "relative", zIndex: 10 }]}
@@ -75,7 +75,7 @@ const SwipeToCheckOut = ({ setCheckOutTime, setIsCheckedOut }) => {
             <Animated.Text
               style={{
                 fontFamily: "Montserrat",
-                opacity: opacity, // Bind opacity to the animated value
+                opacity: opacity,
               }}
               className="absolute w-full text-center text-white font-bold"
             >

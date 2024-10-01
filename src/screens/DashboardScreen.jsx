@@ -1,11 +1,10 @@
 import React from "react";
-import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { useFonts } from "expo-font";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CalendarComponent from "../components/Calendar/Calendar";
 import AttendancePanel from "../components/Panels/AttendancePanel";
 import Header from "../components/Header/Header";
-import AttendanceRecord from "../components/Panels/AttendanceRecord";
 
 const DashboardScreen = () => {
   const [fontsLoaded] = useFonts({
@@ -40,30 +39,6 @@ const DashboardScreen = () => {
           <Text className="text-left font-bold text-md">Today Attendance</Text>
           <AttendancePanel />
           {/* Row for Your Activity and View All */}
-          <View className="flex-row justify-between items-center mt-6">
-            <Text className="font-bold text-md">Your Activity</Text>
-            <TouchableOpacity onPress={handleViewAllPress}>
-              <Text className="font-bold mr-5 text-sm text-blue-700">
-                View All
-              </Text>
-            </TouchableOpacity>
-          </View>
-          {/* Your Attendance Section */}
-          <AttendanceRecord
-            status="Checked In"
-            date="April 17, 2024"
-            time="08:45 am"
-            iconSource={require("../assets/img/login.png")}
-            bgColor="bg-panel-checkedin"
-          />
-          <AttendanceRecord
-            status="Checked Out"
-            date="April 17, 2024"
-            time="17:00 pm"
-            iconSource={require("../assets/img/logout.png")}
-            bgColor="bg-custom-yellow"
-          />
-          {/* <SwipeToCheckIn /> */}
         </View>
       </SafeAreaView>
     </ScrollView>

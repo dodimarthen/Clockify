@@ -9,7 +9,7 @@ const SwipeToCheckIn = ({ setCheckInTime, setIsCheckedIn }) => {
 
   const [isCheckedIn, setIsCheckedInLocal] = useState(false);
   const pan = useRef(new Animated.ValueXY()).current;
-  const opacity = useRef(new Animated.Value(0)).current; // For fade-in effect
+  const opacity = useRef(new Animated.Value(0)).current;
 
   const panResponder = useRef(
     PanResponder.create({
@@ -56,7 +56,7 @@ const SwipeToCheckIn = ({ setCheckInTime, setIsCheckedIn }) => {
 
   return (
     <View className="flex-1 justify-center items-center">
-      <View className="relative w-[370px] h-[60px] bg-[#295F98] rounded-full justify-center mr-2 mt-3">
+      <View className="relative w-[370px] h-[60px] bg-[#1E3E62] rounded-full justify-center mr-2 mt-3">
         <Animated.View
           {...panResponder.panHandlers}
           style={[pan.getLayout(), { position: "relative", zIndex: 10 }]}
