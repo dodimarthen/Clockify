@@ -20,7 +20,7 @@ const SwipeToCheckIn = ({ setCheckInTime, setIsCheckedIn }) => {
       }),
       onPanResponderRelease: (e, gestureState) => {
         if (gestureState.dx > 150) {
-          const currentTime = new Date().toLocaleTimeString([], {
+          const currentTime = new Date().toLocaleString([], {
             hour: "2-digit",
             minute: "2-digit",
           });

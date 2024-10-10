@@ -11,27 +11,55 @@ const AttendancePanel = () => {
   const [checkInTime, setCheckInTime] = React.useState(null);
   const [checkOutTime, setCheckOutTime] = React.useState(null);
   const [isCheckedOut, setIsCheckedOut] = React.useState(false);
+  const [checkInMessage, setCheckInMessage] = React.useState(""); // New state for the check-in message
+  const [checkOutMessage, setCheckOutMessage] =
+    React.useState("Check Out Here!");
 
   const handleCheckIn = () => {
-    setCheckInTime(new Date().toLocaleTimeString());
+    const currentTime = new Date();
+    const formattedTime = currentTime.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+
+    // Compare the check-in time with 08:45:59
+    if (formattedTime <= "08:45:59") {
+      setCheckInMessage("On Time");
+    } else {
+      setCheckInMessage("You are late!");
+    }
+
+    setCheckInTime(formattedTime);
     setTimeout(() => {
       setIsCheckedIn(true);
     }, 3000);
   };
 
-  const [fontsLoaded] = useFonts({
-    Montserrat: require("../../assets/fonts/Montserrat-Medium.ttf"),
-    Roboto: require("../../assets/fonts/Roboto-Bold.ttf"),
-  });
+  const handleCheckOut = () => {
+    const currentTime = new Date();
+    const formattedTime = currentTime.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+
+    setCheckOutTime(formattedTime);
+    setCheckOutMessage("Take Care!👋");
+    setTimeout(() => {
+      setIsCheckedOut(true);
+    }, 3000);
+  };
 
   const handleViewAllPress = () => {
     // Handle the press event here
     console.log("View All pressed");
   };
 
-  const handleCardPress = () => {
-    console.log("Card pressed!");
-  };
+  const [fontsLoaded] = useFonts({
+    Montserrat: require("../../assets/fonts/Montserrat-Medium.ttf"),
+    Roboto: require("../../assets/fonts/Roboto-Bold.ttf"),
+  });
 
   if (!fontsLoaded) {
     return null;
@@ -46,7 +74,7 @@ const AttendancePanel = () => {
           backgroundColor="#41B3A2"
           time={checkInTime}
           isChecked={isCheckedIn}
-          children="On Time"
+          children={checkInMessage} // Set the check-in message dynamically
           style={{ width: "48%", marginBottom: 10 }}
         />
 
@@ -56,7 +84,7 @@ const AttendancePanel = () => {
           backgroundColor="#0000FF80"
           time={checkOutTime}
           isChecked={isCheckedOut}
-          children="Takecare!"
+          children={checkOutMessage} // Set the check-out message dynamically
           style={{ width: "48%", marginBottom: 10 }}
         />
       </View>
@@ -118,7 +146,7 @@ const AttendancePanel = () => {
         ) : (
           <SwipeToCheckOut
             setCheckOutTime={setCheckOutTime}
-            setIsCheckedOut={setIsCheckedOut}
+            setIsCheckedOut={handleCheckOut} // Handle checkout with message update
           />
         )}
       </View>

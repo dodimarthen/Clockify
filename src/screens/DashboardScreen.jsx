@@ -13,7 +13,6 @@ const DashboardScreen = () => {
   });
 
   const handleViewAllPress = () => {
-    // Handle the press event here
     console.log("View All pressed");
   };
 
@@ -30,9 +29,7 @@ const DashboardScreen = () => {
         {/* Header Section */}
         <Header />
         {/* Calendar Section */}
-        <View className="mt-5">
-          <CalendarComponent />
-        </View>
+        <View className="mt-5">{/* <CalendarComponent /> */}</View>
 
         {/* Today Attendance Section */}
         <View className="bg-custom-white-two mt-8 rounded-3xl flex-1 pl-4 py-2">
