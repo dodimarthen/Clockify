@@ -1,51 +1,68 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v4"
 )
 
-
-type book struct {
-	ID       string `json:"id"`
-	Title    string `json:"title"`
-	Author   string `json:"author"`
-	Quantity int    `json:"quantity"`
+var sampleCredentials = map[string]string{
+	"email": "johndoe@gmail.com",
+	"password": "123",
 }
 
+var jwtKey = []byte("your_secret_key")
 
-var books = []book{
-	{ID: "1", Title: "Blue Train", Author: "John Coltrane", Quantity: 2},
-	{ID: "2", Title: "Jeru", Author: "Gerry Mulligan", Quantity: 1},
-	{ID: "3", Title: "Sarah Vaughan and Clifford Brown", Author: "Sarah Vaughan", Quantity: 3},
+type Credentials struct {
+	Email string `json:"email"`
+	Password string `json:"password"`
 }
 
-
-func getBooks(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, books)
+type Claims struct {
+	Email string `json:"email"`
+	jwt.RegisteredClaims
 }
 
+func main() {
+	r := gin.Default()
 
-func createBook(c *gin.Context) {
-	var newBook book
+	r.POST("/login", login)
 
-	if err := c.BindJSON(&newBook); err != nil {
+	r.Run(":8082")
+}
+
+func login(c *gin.Context) {
+	var creds Credentials
+	if err := c.ShouldBindJSON(&creds); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request"})
+			return
+	}
+
+	// Log received credentials
+	fmt.Printf("Received credentials: %+v\n", creds)
+
+	if creds.Email != sampleCredentials["email"] || creds.Password != sampleCredentials["password"] {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials. Check your username or password"})
+			return
+	}
+
+	expirationTime := time.Now().Add(15 * time.Minute)
+	claims := &Claims{
+		Email: creds.Email,
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(expirationTime),
+		},
+	}
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	tokenString, err := token.SignedString(jwtKey)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not generate token"})
 		return
 	}
 
-	books = append(books, newBook)
-	c.IndentedJSON(http.StatusCreated, newBook)
-}
 
-
-func main() {
-	router := gin.Default()
-
-	
-	router.GET("/books", getBooks)
-	router.POST("/books", createBook)
-
-
-	router.Run("localhost:8083")
+	c.JSON(http.StatusOK, gin.H{"token": tokenString})
 }

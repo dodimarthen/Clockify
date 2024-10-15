@@ -1,7 +1,8 @@
-import { View, Text, TextInput, Pressable, Image } from "react-native";
+import { View, Text, TextInput, Pressable, Image, Alert } from "react-native";
 import { useFonts } from "expo-font";
 import React, { useState, useEffect } from "react";
 import { Entypo } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = ({ navigation }) => {
   const [fontsLoaded] = useFonts({
@@ -9,50 +10,57 @@ const LoginScreen = ({ navigation }) => {
   });
   const [pressedLogin, setPressedLogin] = useState(false);
   const [pressedForgotPassword, setPressedForgotPassword] = useState(false);
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
-
-  const sampleCredentials = {
-    username: "johndoe@gmail.com",
-    password: "123",
-  };
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (loginError) {
       const timer = setTimeout(() => {
         setLoginError("");
       }, 2000);
-
       return () => clearTimeout(timer);
     }
   }, [loginError]);
 
-  const handleLogin = () => {
-    if (
-      username === sampleCredentials.username &&
-      password === sampleCredentials.password
-    ) {
-      navigation.navigate("Dashboard");
-    } else {
-      setLoginError("Invalid username or password");
+  const handleLogin = async () => {
+    console.log("Login button pressed");
+    if (!email || !password) {
+      setLoginError("Please enter your username and password.");
+      console.log("Email or password is empty");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      console.log("Response received", response);
+
+      const data = await response.json();
+      console.log("Data received", data);
+
+      if (response.ok) {
+        await AsyncStorage.setItem("token", data.token);
+        navigation.navigate("Dashboard");
+      } else {
+        setLoginError(data.error || "Login failed");
+      }
+    } catch (error) {
+      Alert.alert("Error", "Unable to login. Please try again later.");
+      console.error("Login error", error);
     }
   };
 
   return (
     <View className="flex-1 bg-custom-blue items-center justify-start min-h-screen">
-      <Image
-        source={require("../assets/img/Vector.png")}
-        className="h-64 w-64"
-        style={{
-          position: "absolute",
-          right: 0,
-          top: 0,
-          zIndex: -1,
-        }}
-      />
-
       <View className="items-center">
         <Text
           className="text-2xl text-custom-white font-semibold mt-40 mb-0"
@@ -66,23 +74,19 @@ const LoginScreen = ({ navigation }) => {
       </View>
 
       <View className="w-full px-8 mt-10">
-        {/* Username Container */}
-        <View className="mt-10 ">
-          <Text className="text-s text-custom-white mb-2 font-bold">
-            Username
-          </Text>
+        <View className="mt-10">
+          <Text className="text-s text-custom-white mb-2 font-bold">Email</Text>
           <TextInput
             className="border border-gray-300 rounded-lg px-4 py-2 w-full text-white"
             placeholder="example@gmail.com"
             placeholderTextColor="#F1EFEF"
-            value={username}
-            onChangeText={setUsername}
+            value={email}
+            onChangeText={setEmail}
             editable={true}
             selectTextOnFocus={true}
           />
         </View>
 
-        {/* Password Container */}
         <View className="mt-4 relative">
           <Text className="text-s mb-2 font-bold text-white">Password</Text>
           <TextInput
@@ -108,7 +112,6 @@ const LoginScreen = ({ navigation }) => {
           </Pressable>
         </View>
 
-        {/* Login Button */}
         <View className="mt-6">
           <Pressable
             onPress={handleLogin}
@@ -129,12 +132,12 @@ const LoginScreen = ({ navigation }) => {
           </Pressable>
         </View>
 
-        {/* Error Message */}
         {loginError ? (
-          <Text className="text-custom-red text-center mt-2">{loginError}</Text>
+          <Text className="text-custom-white text-center mt-2">
+            {loginError}
+          </Text>
         ) : null}
 
-        {/* Forget Password Button */}
         <View className="mt-1">
           <Pressable
             onPressIn={() => setPressedForgotPassword(true)}
