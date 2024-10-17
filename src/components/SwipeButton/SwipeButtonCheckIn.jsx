@@ -33,10 +33,9 @@ const SwipeToCheckIn = ({ setCheckInTime, setIsCheckedIn }) => {
             setCheckInTime(currentTime);
             console.log(`Checked in at: ${currentTime}`);
 
-            // Trigger fade-in animation for the success message
             Animated.timing(opacity, {
               toValue: 1,
-              duration: 500, // 500ms for the fade-in effect
+              duration: 500,
               useNativeDriver: true,
             }).start();
           });
@@ -88,7 +87,7 @@ const SwipeToCheckIn = ({ setCheckInTime, setIsCheckedIn }) => {
                 height: 20,
                 position: "absolute",
                 right: 93,
-                opacity: opacity, // Bind opacity to the animated value
+                opacity: opacity,
               }}
             />
           </>

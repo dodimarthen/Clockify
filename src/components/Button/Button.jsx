@@ -8,7 +8,7 @@ function Button({ text, onPress, color }) {
         className={`${color} hover:bg-blue-700 rounded-lg py-4 px-8`}
         onPress={onPress}
       >
-        <Text className="text-white font-bold">{text}</Text>
+        <Text className="text-white font-bold text-sm">{text}</Text>
       </TouchableOpacity>
     </View>
   );

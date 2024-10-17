@@ -29,7 +29,7 @@ const ActionCard = ({
           </View>
           <Text className="text-gray-700 font-bold">{title}</Text>
         </View>
-        <Text className="text-gray-800 font-bold text-base">{children}</Text>
+        <Text className="text-gray-800 font-bold text-md mt-3">{children}</Text>
         <Text className="text-slate-600 font-normal text-left">
           {isChecked ? time : defaultText}
         </Text>

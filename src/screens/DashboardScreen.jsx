@@ -1,24 +1,35 @@
-import React from "react";
-import { View, Text, ScrollView } from "react-native";
+import React, { useState, useEffect, useCallback } from "react";
+import { View, Text, ScrollView, BackHandler } from "react-native";
 import { useFonts } from "expo-font";
 import { SafeAreaView } from "react-native-safe-area-context";
-import CalendarComponent from "../components/Calendar/Calendar";
+import { useFocusEffect } from "@react-navigation/native";
 import AttendancePanel from "../components/Panels/AttendancePanel";
 import Header from "../components/Header/Header";
+import Button from "../components/Button/Button";
 
-const DashboardScreen = () => {
+const DashboardScreen = ({ navigation }) => {
   const [fontsLoaded] = useFonts({
     Montserrat: require("../assets/fonts/Montserrat-Medium.ttf"),
     Roboto: require("../assets/fonts/Roboto-Bold.ttf"),
   });
 
-  const handleViewAllPress = () => {
-    console.log("View All pressed");
-  };
+  // Disable back button when on DashboardScreen
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        // Disable back button behavior
+        return true;
+      };
 
-  const handleCardPress = () => {
-    console.log("Card pressed!");
-  };
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        onBackPress
+      );
+
+      return () => backHandler.remove();
+    }, [])
+  );
+
   if (!fontsLoaded) {
     return null;
   }
@@ -28,14 +39,18 @@ const DashboardScreen = () => {
       <SafeAreaView className="flex-1">
         {/* Header Section */}
         <Header />
-        {/* Calendar Section */}
-        <View className="mt-5">{/* <CalendarComponent /> */}</View>
-
         {/* Today Attendance Section */}
-        <View className="bg-custom-white-two mt-8 rounded-3xl flex-1 pl-4 py-2">
+        <View className="bg-custom-white-two mt-2 rounded-3xl flex-1 pl-4 py-2">
           <Text className="text-left font-bold text-md">Today Attendance</Text>
+
           <AttendancePanel />
-          {/* Row for Your Activity and View All */}
+        </View>
+        <View>
+          <Button
+            color="bg-panel-checkedin"
+            text="Logout"
+            onPress={() => navigation.navigate("OnBoard")}
+          />
         </View>
       </SafeAreaView>
     </ScrollView>

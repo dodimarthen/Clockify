@@ -11,7 +11,7 @@ const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => (
   <Stack.Navigator
-    initialRouteName="Dashboard"
+    initialRouteName="OnBoard"
     screenOptions={{ headerShown: false }}
   >
     <Stack.Screen name="Dashboard" component={DashboardScreen} />

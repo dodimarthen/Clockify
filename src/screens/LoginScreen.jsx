@@ -1,4 +1,12 @@
-import { View, Text, TextInput, Pressable, Image, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Pressable,
+  Image,
+  Alert,
+  ActivityIndicator,
+} from "react-native";
 import { useFonts } from "expo-font";
 import React, { useState, useEffect } from "react";
 import { Entypo } from "@expo/vector-icons";
@@ -48,14 +56,22 @@ const LoginScreen = ({ navigation }) => {
       console.log("Data received", data);
 
       if (response.ok) {
-        await AsyncStorage.setItem("token", data.token);
-        navigation.navigate("Dashboard");
+        if (data.token) {
+          await AsyncStorage.setItem("token", data.token);
+          navigation.navigate("Dashboard");
+        } else {
+          setLoginError("Login failed: Token not received");
+        }
       } else {
-        setLoginError(data.error || "Login failed");
+        setLoginError(
+          data.error || "An unexpected error occurred. Please try again."
+        );
       }
     } catch (error) {
       Alert.alert("Error", "Unable to login. Please try again later.");
       console.error("Login error", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -63,14 +79,17 @@ const LoginScreen = ({ navigation }) => {
     <View className="flex-1 bg-custom-blue items-center justify-start min-h-screen">
       <View className="items-center">
         <Text
-          className="text-2xl text-custom-white font-semibold mt-40 mb-0"
+          className="text-2xl text-custom-white font-semibold mt-40 mb-[-20]"
           style={{
             fontFamily: fontsLoaded ? "Roboto-Bold" : "System",
           }}
         >
           Sign in To Your Account
         </Text>
-        <Image source={require("../assets/img/smallicons.png")} />
+        <Image
+          source={require("../assets/img/On.Time5.png")}
+          className="mb-5 w-40 h-20"
+        />
       </View>
 
       <View className="w-full px-8 mt-10">
@@ -82,7 +101,7 @@ const LoginScreen = ({ navigation }) => {
             placeholderTextColor="#F1EFEF"
             value={email}
             onChangeText={setEmail}
-            editable={true}
+            editable={!loading}
             selectTextOnFocus={true}
           />
         </View>
@@ -96,7 +115,7 @@ const LoginScreen = ({ navigation }) => {
             secureTextEntry={!passwordVisible}
             value={password}
             onChangeText={setPassword}
-            editable={true}
+            editable={!loading}
             selectTextOnFocus={true}
           />
 
@@ -117,18 +136,23 @@ const LoginScreen = ({ navigation }) => {
             onPress={handleLogin}
             onPressIn={() => setPressedLogin(true)}
             onPressOut={() => setPressedLogin(false)}
+            disabled={loading}
             className={`items-center justify-center py-3 px-5 rounded-xl bg-custom-white ${
               pressedLogin ? "opacity-30" : "opacity-100"
             }`}
           >
-            <Text
-              className="text-custom-blue font-semibold text-base antialiased"
-              style={{
-                fontFamily: fontsLoaded ? "Roboto-Bold" : "System",
-              }}
-            >
-              Login
-            </Text>
+            {loading ? (
+              <ActivityIndicator size="small" color="#0000ff" />
+            ) : (
+              <Text
+                className="text-custom-blue font-semibold text-base antialiased"
+                style={{
+                  fontFamily: fontsLoaded ? "Roboto-Bold" : "System",
+                }}
+              >
+                Login
+              </Text>
+            )}
           </Pressable>
         </View>
 

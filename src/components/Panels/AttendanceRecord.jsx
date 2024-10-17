@@ -24,7 +24,7 @@ const AttendanceRecord = ({ status, date, time, iconSource, bgColor }) => {
 
         <View className="items-end">
           <Text className="text-sm font-bold">{time}</Text>
-          <Text className="text-gray-500 text-xs">On Time</Text>
+          {/* <Text className="text-gray-500 text-xs">{message}</Text> */}
         </View>
       </View>
     </View>

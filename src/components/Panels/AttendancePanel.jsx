@@ -11,9 +11,9 @@ const AttendancePanel = () => {
   const [checkInTime, setCheckInTime] = React.useState(null);
   const [checkOutTime, setCheckOutTime] = React.useState(null);
   const [isCheckedOut, setIsCheckedOut] = React.useState(false);
-  const [checkInMessage, setCheckInMessage] = React.useState(""); // New state for the check-in message
+  const [checkInMessage, setCheckInMessage] = React.useState("");
   const [checkOutMessage, setCheckOutMessage] =
-    React.useState("Check Out Here!");
+    React.useState("Not Available Yet!");
 
   const handleCheckIn = () => {
     const currentTime = new Date();
@@ -74,7 +74,7 @@ const AttendancePanel = () => {
           backgroundColor="#41B3A2"
           time={checkInTime}
           isChecked={isCheckedIn}
-          children={checkInMessage} // Set the check-in message dynamically
+          children={checkInMessage}
           style={{ width: "48%", marginBottom: 10 }}
         />
 
@@ -84,7 +84,7 @@ const AttendancePanel = () => {
           backgroundColor="#0000FF80"
           time={checkOutTime}
           isChecked={isCheckedOut}
-          children={checkOutMessage} // Set the check-out message dynamically
+          children={checkOutMessage}
           style={{ width: "48%", marginBottom: 10 }}
         />
       </View>
@@ -110,6 +110,20 @@ const AttendancePanel = () => {
         />
       </View>
 
+      <View className="mt-2 mb-4">
+        {!isCheckedIn ? (
+          <SwipeToCheckIn
+            setCheckInTime={setCheckInTime}
+            setIsCheckedIn={handleCheckIn}
+          />
+        ) : (
+          <SwipeToCheckOut
+            setCheckOutTime={setCheckOutTime}
+            setIsCheckedOut={handleCheckOut}
+          />
+        )}
+      </View>
+
       {/* Your Activity and View All Row */}
       <View className="flex-row justify-between items-center mt-6 mx-4">
         <Text className="font-bold text-md">Your Activity</Text>
@@ -122,34 +136,23 @@ const AttendancePanel = () => {
       <View className="mt-4 mx-4">
         <AttendanceRecord
           status="Checked In"
+          // message={checkInMessage}
           date="April 17, 2024"
-          time="08:45 am"
+          time={checkInTime}
           iconSource={require("../../assets/img/login.png")}
           bgColor="bg-panel-checkedin"
         />
         <AttendanceRecord
           status="Checked Out"
           date="April 17, 2024"
-          time="17:00 pm"
+          // message={checkOutMessage}
+          time={checkOutTime}
           iconSource={require("../../assets/img/logout.png")}
-          bgColor="bg-custom-yellow"
+          bgColor="bg-custom-green"
         />
       </View>
 
       {/* Swipe Section */}
-      <View className="mt-4">
-        {!isCheckedIn ? (
-          <SwipeToCheckIn
-            setCheckInTime={setCheckInTime}
-            setIsCheckedIn={handleCheckIn}
-          />
-        ) : (
-          <SwipeToCheckOut
-            setCheckOutTime={setCheckOutTime}
-            setIsCheckedOut={handleCheckOut} // Handle checkout with message update
-          />
-        )}
-      </View>
     </>
   );
 };

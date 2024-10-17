@@ -15,7 +15,7 @@ const ForgetPasswordScreen = ({ navigation }) => {
   return (
     <SafeAreaView>
       <View className="flex-1 bg-custom-blue justify-center min-h-screen">
-        <Image
+        {/* <Image
           source={require("../assets/img/Vector.png")}
           className="h-64 w-64"
           style={{
@@ -24,7 +24,7 @@ const ForgetPasswordScreen = ({ navigation }) => {
             top: 0,
             zIndex: -1,
           }}
-        />
+        /> */}
 
         <View className="mt-5">
           <Text

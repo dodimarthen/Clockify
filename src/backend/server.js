@@ -30,11 +30,11 @@ app.get("/data", async (req, res) => {
 
   try {
     const data = await client.get("myData");
-    console.log("Retrieved data from Redis:", data); // Log the data
+    console.log("Retrieved data from Redis:", data);
 
     if (data) {
       try {
-        const parsedData = JSON.parse(data); // Attempt to parse the JSON
+        const parsedData = JSON.parse(data);
         return res.json({ source: "cache", data: parsedData });
       } catch (jsonError) {
         console.error("Error parsing JSON from Redis:", jsonError);
@@ -45,11 +45,11 @@ app.get("/data", async (req, res) => {
       await client.set("myData", JSON.stringify(newData), {
         EX: 3600, // 1 hour expiry
       });
-      console.log("Redis data set successfully:", newData); // Log the new data
+      console.log("Redis data set successfully:", newData);
       return res.json({ source: "server", data: newData });
     }
   } catch (err) {
-    console.error("Error retrieving or setting data:", err); // Log errors
+    console.error("Error retrieving or setting data:", err);
     return res.status(500).send(err);
   }
 });
