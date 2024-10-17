@@ -1,6 +1,7 @@
 import supertest from "supertest";
 import { web } from "../src/application/web.js";
 import { prismaClient } from "../src/application/database.js";
+import { logger } from "../src/application/logging.js";
 
 describe("POST /api/users", function () {
   afterEach(async () => {
@@ -25,15 +26,27 @@ describe("POST /api/users", function () {
     expect(result.body.data.password).toBeUndefined();
   });
 
-  it("Should not be able to register new user", async () => {
-    const result = await supertest(web).post("/api/users").send({
-      username: "",
-      password: "",
-      name: "",
+  it("Should reject if username already exist", async () => {
+    let result = await supertest(web).post("/api/users").send({
+      username: "johncena",
+      password: "rahasia",
+      name: "John Cena Ambarawa",
     });
 
-    console.log(result.body);
+    logger.info(result.body);
+    expect(result.status).toBe(200);
+    expect(result.body.data.username).toBe("johncena");
+    expect(result.body.data.name).toBe("John Cena Ambarawa");
+    expect(result.body.data.password).toBeUndefined();
+
+    result = await supertest(web).post("/api/users").send({
+      username: "johncena",
+      password: "rahasia",
+      name: "John Cena Ambarawa",
+    });
+
+    logger.info(result.body);
     expect(result.status).toBe(400);
-    expect(result.body.error).toBeDefined();
+    expect(result.body.errors).toBeDefined();
   });
 });
