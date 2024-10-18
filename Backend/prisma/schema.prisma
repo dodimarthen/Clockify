@@ -38,6 +38,8 @@ model Contact{
   @@map("contacts")
 }
 
+
+
 model Address {
   id          Int     @id @default(autoincrement())
   street      String? @db.VarChar(255)
