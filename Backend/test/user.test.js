@@ -14,11 +14,13 @@ describe("POST /api/users", function () {
       username: "test",
       password: "rahasia",
       name: "test",
+      email: "test@sharkmail.com",
     });
 
     expect(result.status).toBe(200);
     expect(result.body.data.username).toBe("test");
     expect(result.body.data.name).toBe("test");
+    expect(result.body.data.email).toBeUndefined();
     expect(result.body.data.password).toBeUndefined();
   });
 
@@ -27,6 +29,7 @@ describe("POST /api/users", function () {
       username: "",
       password: "",
       name: "",
+      email: "",
     });
 
     expect(result.status).toBe(400);
@@ -38,18 +41,21 @@ describe("POST /api/users", function () {
       username: "test",
       password: "rahasia",
       name: "test",
+      email: "test@sharkmail.com",
     });
 
     logger.info(result.body);
     expect(result.status).toBe(200);
     expect(result.body.data.username).toBe("test");
     expect(result.body.data.name).toBe("test");
+    expect(result.body.data.email).toBeUndefined();
     expect(result.body.data.password).toBeUndefined();
 
     result = await supertest(web).post("/api/users").send({
       username: "test",
       password: "rahasia",
       name: "test",
+      email: "test@sharkmail.com",
     });
 
     logger.info(result.body);
@@ -69,7 +75,7 @@ describe("POST /api/users/login", function () {
 
   it("should be able to login", async () => {
     const result = await supertest(web).post("/api/users/login").send({
-      username: "test",
+      email: "test@sharkmail.com",
       password: "rahasia",
     });
 
