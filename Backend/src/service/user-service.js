@@ -37,24 +37,26 @@ const login = async (request) => {
 
   const user = await prismaClient.user.findUnique({
     where: {
-      username: loginRequest.username,
+      email: loginRequest.email,
     },
     select: {
       username: true,
       password: true,
+      email: true,
     },
   });
 
   if (!user) {
-    throw new ResponseError(401, "Username or password wrong");
+    throw new ResponseError(401, "Email or password wrong");
   }
 
   const isPasswordValid = await bcrypt.compare(
     loginRequest.password,
     user.password
   );
+
   if (!isPasswordValid) {
-    throw new ResponseError(401, "Username or password wrong");
+    throw new ResponseError(401, "Email or password wrong");
   }
 
   const token = uuid().toString();
@@ -63,12 +65,11 @@ const login = async (request) => {
       token: token,
     },
     where: {
-      username: user.username,
+      email: user.email,
     },
     select: {
       token: true,
     },
   });
 };
-
 export default { register, login };

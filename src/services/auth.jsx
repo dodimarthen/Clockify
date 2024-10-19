@@ -18,7 +18,7 @@ export const handleLogin = async (
     const response = await axios.post(
       `${process.env.EXPO_PUBLIC_API_URL}/api/users/login`,
       {
-        username: email,
+        email: email,
         password: password,
       }
     );
@@ -28,10 +28,10 @@ export const handleLogin = async (
       await AsyncStorage.setItem("token", response.data.data.token);
       navigation.navigate("Dashboard");
     } else {
-      setLoginError("Invalid username or password.");
+      setLoginError("Invalid email or password.");
     }
   } catch (error) {
-    setLoginError("Invalid username or password.");
+    setLoginError("Invalid email or password.");
   } finally {
     setLoading(false);
   }

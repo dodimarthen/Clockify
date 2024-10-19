@@ -17,13 +17,12 @@ model User{
   username String @id @db.VarChar(100)
   password String @db.VarChar(100)
   name String @db.VarChar(60)
+  email    String @unique @db.VarChar(200)
   token String? @db.VarChar(100)
   contact Contact[]
 
   @@map("users")
 }
-
-
 model Contact{
   id Int @id @default(autoincrement())
   first_name String @db.VarChar(100)
@@ -37,7 +36,6 @@ model Contact{
 
   @@map("contacts")
 }
-
 
 
 model Address {
