@@ -8,4 +8,4 @@ CREATE TABLE `users` (
 
     UNIQUE INDEX `users_email_key`(`email`),
     PRIMARY KEY (`username`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE InnoDB;
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
