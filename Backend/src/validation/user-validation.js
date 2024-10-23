@@ -12,4 +12,6 @@ const loginUserValidation = Joi.object({
   email: Joi.string().max(200).required(),
 });
 
-export { registerUserValidation, loginUserValidation };
+const getUserValidation = Joi.string().max(100).required();
+
+export { registerUserValidation, loginUserValidation, getUserValidation };
