@@ -83,4 +83,14 @@ describe("POST /api/users/login", function () {
     expect(result.body.data.token).toBeDefined();
     expect(result.body.data.token).not.toBe("test");
   });
+
+  it("should not be able to login if request is invalid", async () => {
+    const result = await supertest(web).post("/api/users/login").send({
+      email: "",
+      password: "",
+    });
+
+    expect(result.status).toBe(400);
+    expect(result.body.errors).toBeDefined();
+  });
 });
