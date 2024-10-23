@@ -93,4 +93,24 @@ describe("POST /api/users/login", function () {
     expect(result.status).toBe(400);
     expect(result.body.errors).toBeDefined();
   });
+
+  it("should not be able to login if email is incorrect", async () => {
+    const result = await supertest(web).post("/api/users/login").send({
+      email: "johndoe@yopmail.com",
+      password: "123",
+    });
+
+    expect(result.status).toBe(401);
+    expect(result.body.errors).toBeDefined();
+  });
+
+  it("should not be able to login if password is incorrect", async () => {
+    const result = await supertest(web).post("/api/users/login").send({
+      email: "johndoe2@yopmail.com",
+      password: "1234",
+    });
+
+    expect(result.status).toBe(401);
+    expect(result.body.errors).toBeDefined();
+  });
 });
