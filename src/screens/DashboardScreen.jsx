@@ -6,16 +6,26 @@ import { useFocusEffect } from "@react-navigation/native";
 import AttendancePanel from "../components/Panels/AttendancePanel";
 import Header from "../components/Header/Header";
 import Button from "../components/Button/Button";
-import { handleLogout } from "../services/auth";
+import { handleLogout, getCurrentUser } from "../services/auth";
 
 const DashboardScreen = ({ navigation }) => {
   const [fontsLoaded] = useFonts({
     Montserrat: require("../assets/fonts/Montserrat-Medium.ttf"),
     Roboto: require("../assets/fonts/Roboto-Bold.ttf"),
   });
+  const [username, setUsername] = useState("");
 
   useFocusEffect(
     useCallback(() => {
+      const fetchCurrentUser = async () => {
+        const currentUser = await getCurrentUser(navigation);
+        if (currentUser) {
+          setUsername(currentUser);
+        }
+      };
+
+      fetchCurrentUser();
+
       const onBackPress = () => {
         return true;
       };
@@ -36,7 +46,7 @@ const DashboardScreen = ({ navigation }) => {
   return (
     <ScrollView>
       <SafeAreaView className="flex-1">
-        <Header />
+        <Header username={username} />
 
         <View className="bg-custom-white-two mt-2 rounded-3xl flex-1 pl-4 py-2">
           <Text className="text-left font-bold text-md">Today Attendance</Text>
@@ -45,7 +55,7 @@ const DashboardScreen = ({ navigation }) => {
         </View>
         <View>
           <Button
-            color="bg-[#024CAA]"
+            color="bg-panel-checkedin"
             text="Logout"
             onPress={() => handleLogout(navigation)}
           />

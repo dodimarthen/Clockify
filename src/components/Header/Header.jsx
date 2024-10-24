@@ -3,7 +3,7 @@ import React from "react";
 import { Avatar } from "react-native-paper";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
-const Header = () => {
+const Header = ({ username }) => {
   return (
     <View className="flex-row items-center justify-between p-4 mt-2">
       <View className="flex-row items-center">
@@ -14,13 +14,14 @@ const Header = () => {
           }}
         />
         <View className="ml-2">
-          <Text className="font-roboto text-lg font-bold">John Doe</Text>
+          <Text className="font-roboto text-lg font-bold">{username}</Text>
           <Text className="font-montserrat text-sm text-gray-500">
             Software Engineer
           </Text>
         </View>
       </View>
 
+      {/* Notification Icon with background */}
       <View
         style={{ backgroundColor: "rgba(240, 235, 227, 0.25)" }}
         className="p-2 rounded-full mr-4"

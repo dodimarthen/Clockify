@@ -1,13 +1,13 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const getCurrentUser = async (navigation) => {
+export const getCurrentUser = async (navigation) => {
   try {
     const token = await AsyncStorage.getItem("token");
 
     if (!token) {
       console.error("No token found, unable to fetch current user");
-      return;
+      return null;
     }
 
     const response = await axios.get(
@@ -20,12 +20,16 @@ const getCurrentUser = async (navigation) => {
     );
 
     if (response.data) {
-      console.log("Current User:", response.data);
+      const username = response.data.data.username;
+      console.log("Current User:", username);
+      return username;
     }
   } catch (error) {
     console.error("Error fetching current user:", error);
+    return null;
   }
 };
+
 export const handleLogin = async (
   email,
   password,
