@@ -14,13 +14,14 @@ const DashboardScreen = ({ navigation }) => {
     Roboto: require("../assets/fonts/Roboto-Bold.ttf"),
   });
   const [username, setUsername] = useState("");
-
+  const [role, setRole] = useState("");
   useFocusEffect(
     useCallback(() => {
       const fetchCurrentUser = async () => {
         const currentUser = await getCurrentUser(navigation);
         if (currentUser) {
-          setUsername(currentUser);
+          setUsername(currentUser.username);
+          setRole(currentUser.role);
         }
       };
 
@@ -46,7 +47,7 @@ const DashboardScreen = ({ navigation }) => {
   return (
     <ScrollView>
       <SafeAreaView className="flex-1">
-        <Header username={username} />
+        <Header username={username} role={role} />
 
         <View className="bg-custom-white-two mt-2 rounded-3xl flex-1 pl-4 py-2">
           <Text className="text-left font-bold text-md">Today Attendance</Text>

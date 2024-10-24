@@ -21,8 +21,10 @@ export const getCurrentUser = async (navigation) => {
 
     if (response.data) {
       const username = response.data.data.username;
-      console.log("Current User:", username);
-      return username;
+      const role = response.data.data.role;
+
+      console.log(username, role);
+      return { username, role };
     }
   } catch (error) {
     console.error("Error fetching current user:", error);
