@@ -21,7 +21,7 @@ const DashboardScreen = ({ navigation }) => {
         const currentUser = await getCurrentUser(navigation);
         if (currentUser) {
           setUsername(currentUser.username);
-          setRole(currentUser.role);
+          setRole(currentUser.role || "role undefined");
         }
       };
 
