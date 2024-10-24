@@ -29,6 +29,7 @@ const register = async (request) => {
     select: {
       username: true,
       name: true,
+      role: true,
     },
   });
 };
@@ -83,6 +84,7 @@ const get = async (username) => {
     select: {
       username: true,
       name: true,
+      role: true,
     },
   });
 
