@@ -66,8 +66,8 @@ const LoginScreen = ({ navigation }) => {
               placeholderTextColor="#F1EFEF"
               value={email}
               onChangeText={setEmail}
-              editable={!loading}
-              selectTextOnFocus={true}
+              editable={true}
+              selectTextOnFocus={false}
             />
           </View>
 
@@ -80,8 +80,8 @@ const LoginScreen = ({ navigation }) => {
               secureTextEntry={!passwordVisible}
               value={password}
               onChangeText={setPassword}
-              editable={!loading}
-              selectTextOnFocus={true}
+              editable={true}
+              selectTextOnFocus={false}
             />
 
             <Pressable

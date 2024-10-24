@@ -45,7 +45,7 @@ const DashboardScreen = ({ navigation }) => {
         </View>
         <View>
           <Button
-            color="bg-panel-checkedin"
+            color="bg-[#024CAA]"
             text="Logout"
             onPress={() => handleLogout(navigation)}
           />

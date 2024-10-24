@@ -5,7 +5,7 @@ function Button({ text, onPress, color }) {
   return (
     <View className="items-center mt-5">
       <TouchableOpacity
-        className={`${color} hover:bg-blue-700 rounded-lg py-4 px-8`}
+        className={`${color} hover:bg-blue-700 rounded-xl py-4 px-6`}
         onPress={onPress}
       >
         <Text className="text-white font-bold text-sm">{text}</Text>

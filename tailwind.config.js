@@ -12,7 +12,7 @@ module.exports = {
         "custom-red": "#DC143C",
         "custom-pink": "#F05A7E",
         "custom-dark-blue": "#006989",
-        "panel-checkedin": "#41B3A2",
+        "panel-checkedin": "#024CAA",
         "custom-checkout": "#387478",
         "custom-green": "#697565",
       },
