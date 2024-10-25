@@ -8,8 +8,11 @@ import { prismaClient } from "../application/database.js";
 import { ResponseError } from "../error/response-error.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 
-const JWT_SECRET = "#EG%<kTvW~0s$xy}bed0c=wadNjlC9";
+const JWT_SECRET = process.env.EXPO_JWT_SECRET;
+console.log("JWT_SECRET:", JWT_SECRET);
 
 const register = async (request) => {
   const user = validate(registerUserValidation, request);
