@@ -1,17 +1,18 @@
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
   TextInput,
   Pressable,
   Image,
-  Alert,
   ActivityIndicator,
 } from "react-native";
 import { useFonts } from "expo-font";
-import React, { useState, useEffect } from "react";
 import { Entypo } from "@expo/vector-icons";
 import { handleLogin } from "../services/auth";
 import { SafeAreaView } from "react-native-safe-area-context";
+import CustomSnackbar from "../components/CustomSnackBar/SnackBar";
+
 const LoginScreen = ({ navigation }) => {
   const [fontsLoaded] = useFonts({
     "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
@@ -23,9 +24,11 @@ const LoginScreen = ({ navigation }) => {
   const [loginError, setLoginError] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [snackbarVisible, setSnackbarVisible] = useState(false);
 
   useEffect(() => {
     if (loginError) {
+      setSnackbarVisible(true);
       const timer = setTimeout(() => {
         setLoginError("");
       }, 2000);
@@ -121,12 +124,6 @@ const LoginScreen = ({ navigation }) => {
             </Pressable>
           </View>
 
-          {loginError ? (
-            <Text className="text-custom-white text-center mt-2">
-              {loginError}
-            </Text>
-          ) : null}
-
           <View className="mt-1">
             <Pressable
               onPressIn={() => setPressedForgotPassword(true)}
@@ -136,17 +133,18 @@ const LoginScreen = ({ navigation }) => {
                 pressedForgotPassword ? "opacity-30" : "opacity-100"
               }`}
             >
-              <Text
-                className="font-semibold text-custom-white subpixel-antialiased"
-                style={{
-                  color: pressedForgotPassword ? "#FFFFFF" : "#FFFFFF",
-                }}
-              >
+              <Text className="font-semibold text-custom-white subpixel-antialiased">
                 Forget your password?
               </Text>
             </Pressable>
           </View>
         </View>
+
+        <CustomSnackbar
+          visible={snackbarVisible}
+          onDismiss={() => setSnackbarVisible(false)}
+          message={loginError}
+        />
       </View>
     </SafeAreaView>
   );
