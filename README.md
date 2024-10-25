@@ -3,9 +3,6 @@
 This application is built for internal needs and makes it easier for users to check-in and check-out attendance, and can view previous attendance history. This application is still in the development stage and is not perfect.
 
 ### Built with
-
-### Built with
-
 <p align="left">
   <a href="https://expressjs.com" target="_blank" rel="noreferrer">
     <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original-wordmark.svg" alt="express" width="40" height="40"/>
