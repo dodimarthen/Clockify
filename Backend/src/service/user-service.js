@@ -7,7 +7,9 @@ import {
 import { prismaClient } from "../application/database.js";
 import { ResponseError } from "../error/response-error.js";
 import bcrypt from "bcrypt";
-import { v4 as uuid } from "uuid";
+import jwt from "jsonwebtoken";
+
+const JWT_SECRET = "#EG%<kTvW~0s$xy}bed0c=wadNjlC9";
 
 const register = async (request) => {
   const user = validate(registerUserValidation, request);
@@ -44,6 +46,8 @@ const login = async (request) => {
     select: {
       password: true,
       email: true,
+      username: true,
+      role: true,
     },
   });
 
@@ -60,7 +64,16 @@ const login = async (request) => {
     throw new ResponseError(401, "Email or password wrong");
   }
 
-  const token = uuid().toString();
+  const token = jwt.sign(
+    {
+      email: user.email,
+      username: user.username,
+      role: user.role,
+    },
+    JWT_SECRET,
+    { algorithm: "HS256", expiresIn: "1h" }
+  );
+
   return prismaClient.user.update({
     data: {
       token: token,

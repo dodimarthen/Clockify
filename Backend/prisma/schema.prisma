@@ -19,7 +19,7 @@ model User{
   name String @db.VarChar(60)
   email    String @unique @db.VarChar(200)
   role String? @db.VarChar(60)
-  token String? @db.VarChar(100)
+  token String? @db.VarChar(400)
   contact Contact[]
 
   @@map("users")
@@ -36,9 +36,9 @@ model Contact{
   role String? @db.VarChar(60)
   addresses  Address[]
 
+
   @@map("contacts")
 }
-
 
 model Address {
   id          Int     @id @default(autoincrement())
