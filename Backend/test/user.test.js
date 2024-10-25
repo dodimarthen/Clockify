@@ -15,11 +15,13 @@ describe("POST /api/users", function () {
       password: "rahasia",
       name: "test",
       email: "test@sharkmail.com",
+      role: "direktur operasional",
     });
 
     expect(result.status).toBe(200);
     expect(result.body.data.username).toBe("test");
     expect(result.body.data.name).toBe("test");
+    expect(result.body.data.role).toBe("direktur operasional");
     expect(result.body.data.email).toBeUndefined();
     expect(result.body.data.password).toBeUndefined();
   });
@@ -30,6 +32,7 @@ describe("POST /api/users", function () {
       password: "",
       name: "",
       email: "",
+      role: "",
     });
 
     expect(result.status).toBe(400);
@@ -42,12 +45,14 @@ describe("POST /api/users", function () {
       password: "rahasia",
       name: "test",
       email: "test@sharkmail.com",
+      role: "direktur operasional",
     });
 
     logger.info(result.body);
     expect(result.status).toBe(200);
     expect(result.body.data.username).toBe("test");
     expect(result.body.data.name).toBe("test");
+    expect(result.body.data.role).toBe("direktur operasional");
     expect(result.body.data.email).toBeUndefined();
     expect(result.body.data.password).toBeUndefined();
 
@@ -56,6 +61,7 @@ describe("POST /api/users", function () {
       password: "rahasia",
       name: "test",
       email: "test@sharkmail.com",
+      role: "direktur operasional",
     });
 
     logger.info(result.body);
