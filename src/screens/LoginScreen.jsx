@@ -1,17 +1,13 @@
+// screens/LoginScreen.js
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  Pressable,
-  Image,
-  ActivityIndicator,
-} from "react-native";
+import { View, Text, Image, Pressable } from "react-native";
 import { useFonts } from "expo-font";
-import { Entypo } from "@expo/vector-icons";
-import { handleLogin } from "../services/auth";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { handleLogin } from "../services/auth";
 import CustomSnackbar from "../components/CustomSnackBar/SnackBar";
+import EmailInput from "../components/FormFields/EmailInput";
+import PasswordInput from "../components/FormFields/PasswordInput";
+import CustomButton from "../components/Button/CustomButton";
 
 const LoginScreen = ({ navigation }) => {
   const [fontsLoaded] = useFonts({
@@ -40,6 +36,10 @@ const LoginScreen = ({ navigation }) => {
     handleLogin(email, password, navigation, setLoading, setLoginError);
   };
 
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
   return (
     <SafeAreaView>
       <View className="flex-1 bg-custom-blue items-center justify-start min-h-screen">
@@ -59,69 +59,23 @@ const LoginScreen = ({ navigation }) => {
         </View>
 
         <View className="w-full px-8 mt-10">
-          <View className="mt-10">
-            <Text className="text-s text-custom-white mb-2 font-bold">
-              Email
-            </Text>
-            <TextInput
-              className="border border-gray-300 rounded-lg px-4 py-2 w-full text-white"
-              placeholder="example@gmail.com"
-              placeholderTextColor="#F1EFEF"
-              value={email}
-              onChangeText={setEmail}
-              editable={true}
-              selectTextOnFocus={false}
-            />
-          </View>
-
-          <View className="mt-4 relative">
-            <Text className="text-s mb-2 font-bold text-white">Password</Text>
-            <TextInput
-              className="border border-gray-300 rounded-lg px-4 py-2 w-full text-custom-white"
-              placeholder="********"
-              placeholderTextColor="#F1EFEF"
-              secureTextEntry={!passwordVisible}
-              value={password}
-              onChangeText={setPassword}
-              editable={true}
-              selectTextOnFocus={false}
-            />
-
-            <Pressable
-              onPress={() => setPasswordVisible(!passwordVisible)}
-              style={{ position: "absolute", right: 10, top: 38 }}
-            >
-              <Entypo
-                name={passwordVisible ? "eye-with-line" : "eye"}
-                size={18}
-                color="white"
-              />
-            </Pressable>
-          </View>
+          <EmailInput email={email} setEmail={setEmail} />
+          <PasswordInput
+            password={password}
+            setPassword={setPassword}
+            passwordVisible={passwordVisible}
+            togglePasswordVisibility={togglePasswordVisibility}
+          />
 
           <View className="mt-6">
-            <Pressable
+            <CustomButton
               onPress={onLoginPress}
+              loading={loading}
+              text="Login"
+              pressed={pressedLogin}
               onPressIn={() => setPressedLogin(true)}
               onPressOut={() => setPressedLogin(false)}
-              disabled={loading}
-              className={`items-center justify-center py-3 px-5 rounded-xl bg-custom-white ${
-                pressedLogin ? "opacity-30" : "opacity-100"
-              }`}
-            >
-              {loading ? (
-                <ActivityIndicator size="small" color="#0000ff" />
-              ) : (
-                <Text
-                  className="text-custom-blue font-semibold text-base antialiased"
-                  style={{
-                    fontFamily: fontsLoaded ? "Roboto-Bold" : "System",
-                  }}
-                >
-                  Login
-                </Text>
-              )}
-            </Pressable>
+            />
           </View>
 
           <View className="mt-1">
@@ -138,13 +92,13 @@ const LoginScreen = ({ navigation }) => {
               </Text>
             </Pressable>
           </View>
-        </View>
 
-        <CustomSnackbar
-          visible={snackbarVisible}
-          onDismiss={() => setSnackbarVisible(false)}
-          message={loginError}
-        />
+          <CustomSnackbar
+            visible={snackbarVisible}
+            onDismiss={() => setSnackbarVisible(false)}
+            message={loginError}
+          />
+        </View>
       </View>
     </SafeAreaView>
   );
