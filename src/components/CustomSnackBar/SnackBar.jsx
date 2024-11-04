@@ -8,7 +8,15 @@ const CustomSnackbar = ({ visible, onDismiss, message }) => {
       visible={visible}
       onDismiss={onDismiss}
       duration={1000}
-      style={{ backgroundColor: "red", marginBottom: 30 }}
+      style={{
+        backgroundColor: "red",
+        position: "absolute",
+        bottom: -200,
+        width: "95%",
+        left: 40,
+        alignSelf: "center",
+        borderRadius: 8,
+      }}
       action={{
         label: "Close",
         onPress: onDismiss,
