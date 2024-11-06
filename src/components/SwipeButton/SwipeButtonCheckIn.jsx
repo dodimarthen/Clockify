@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { View, Text, Animated, PanResponder, Image } from "react-native";
 import { useFonts } from "expo-font";
+import CheckModal from "../Modal/Modal";
 
 const SwipeToCheckIn = ({ setCheckInTime, setIsCheckedIn }) => {
   const [fontsLoaded] = useFonts({
@@ -8,6 +9,7 @@ const SwipeToCheckIn = ({ setCheckInTime, setIsCheckedIn }) => {
   });
 
   const [isCheckedIn, setIsCheckedInLocal] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
   const pan = useRef(new Animated.ValueXY()).current;
   const opacity = useRef(new Animated.Value(0)).current;
 
@@ -38,6 +40,8 @@ const SwipeToCheckIn = ({ setCheckInTime, setIsCheckedIn }) => {
               duration: 500,
               useNativeDriver: true,
             }).start();
+
+            setModalVisible(true);
           });
         } else {
           Animated.spring(pan, {
@@ -74,7 +78,7 @@ const SwipeToCheckIn = ({ setCheckInTime, setIsCheckedIn }) => {
             <Animated.Text
               style={{
                 fontFamily: "Montserrat",
-                opacity: opacity, // Bind opacity to the animated value
+                opacity: opacity,
               }}
               className="absolute w-full text-center text-white font-bold"
             >
@@ -100,6 +104,14 @@ const SwipeToCheckIn = ({ setCheckInTime, setIsCheckedIn }) => {
           </Text>
         )}
       </View>
+
+      <CheckModal
+        visible={isModalVisible}
+        onClose={() => setModalVisible(false)}
+        text="Checked In Complete"
+        image={require("../../assets/img/working_vector.png")}
+        children="Happy working!"
+      />
     </View>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
-import { View, Text, Animated, PanResponder, Image } from "react-native";
+import { View, Text, Animated, PanResponder } from "react-native";
 import { useFonts } from "expo-font";
+import CheckModal from "../Modal/Modal";
 
 const SwipeToCheckOut = ({ setCheckOutTime, setIsCheckedOut }) => {
   const [fontsLoaded] = useFonts({
@@ -8,8 +9,9 @@ const SwipeToCheckOut = ({ setCheckOutTime, setIsCheckedOut }) => {
   });
 
   const [isCheckedOut, setIsCheckedOutLocal] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
   const pan = useRef(new Animated.ValueXY()).current;
-  const opacity = useRef(new Animated.Value(0)).current; // For fade-in effect
+  const opacity = useRef(new Animated.Value(0)).current;
 
   const panResponder = useRef(
     PanResponder.create({
@@ -33,12 +35,17 @@ const SwipeToCheckOut = ({ setCheckOutTime, setIsCheckedOut }) => {
             setCheckOutTime(currentTime);
             console.log(`Checked out at: ${currentTime}`);
 
-            // Trigger fade-in animation for the success message
             Animated.timing(opacity, {
               toValue: 1,
-              duration: 500, // 500ms for the fade-in effect
+              duration: 500,
               useNativeDriver: true,
             }).start();
+
+            setModalVisible(true);
+
+            setTimeout(() => {
+              setModalVisible(false);
+            }, 3000);
           });
         } else {
           Animated.spring(pan, {
@@ -88,7 +95,7 @@ const SwipeToCheckOut = ({ setCheckOutTime, setIsCheckedOut }) => {
                 height: 20,
                 position: "absolute",
                 right: 93,
-                opacity: opacity, // Bind opacity to the animated value
+                opacity: opacity,
               }}
             />
           </>
@@ -101,6 +108,14 @@ const SwipeToCheckOut = ({ setCheckOutTime, setIsCheckedOut }) => {
           </Text>
         )}
       </View>
+
+      <CheckModal
+        visible={isModalVisible}
+        onClose={() => setModalVisible(false)}
+        text="You did a great job today!"
+        image={require("../../assets/img/goodbye.png")}
+        children="See you!"
+      />
     </View>
   );
 };
