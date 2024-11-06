@@ -74,8 +74,29 @@ export const handleLogin = async (
 
 export const handleLogout = async (navigation) => {
   try {
-    await AsyncStorage.removeItem("token");
-    navigation.navigate("LoginPage");
+    const token = await AsyncStorage.getItem("token");
+
+    if (!token) {
+      console.log("No token found during logout");
+      return;
+    }
+
+    const response = await axios.delete(
+      `${process.env.EXPO_PUBLIC_API_URL}/api/users/logout`,
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+
+    if (response.status === 200) {
+      console.log("Logout successful");
+      await AsyncStorage.removeItem("token");
+      navigation.navigate("LoginPage");
+    } else {
+      console.error("Logout failed:", response);
+    }
   } catch (error) {
     console.error("Error during logout:", error);
   }
