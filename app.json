@@ -18,11 +18,19 @@
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/img/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.marthens.Clockify"
     },
     "web": {
       "favicon": ".src/assets/favicon.png"
     },
-    "plugins": ["expo-font"]
+    "plugins": [
+      "expo-font"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "b791a0ce-bb2c-4747-a2e3-ebe06dc45f42"
+      }
+    }
   }
 }
