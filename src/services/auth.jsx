@@ -23,7 +23,7 @@ export const getCurrentUser = async () => {
       const username = response.data.data.username;
       const role = response.data.data.role;
 
-      console.log(username, role);
+      console.log("Fetched user role:", role);
       return { username, role };
     }
   } catch (error) {
@@ -57,11 +57,23 @@ export const handleLogin = async (
     if (response.data && response.data.data && response.data.data.token) {
       await AsyncStorage.removeItem("token");
       await AsyncStorage.setItem("token", response.data.data.token);
-      console.log(response.data.data.token);
 
-      await getCurrentUser(navigation);
+      const user = await getCurrentUser();
 
-      navigation.navigate("Dashboard");
+      if (user) {
+        console.log("User role:", user.role);
+
+        if (
+          user.role.toLowerCase() === "admin" ||
+          user.role.toLowerCase() === "administrator"
+        ) {
+          navigation.navigate("AdminPanel");
+        } else {
+          navigation.navigate("Dashboard");
+        }
+      } else {
+        setLoginError("Unable to fetch user details.");
+      }
     } else {
       setLoginError("Invalid email or password.");
     }
@@ -91,13 +103,8 @@ export const handleLogout = async (navigation) => {
     );
 
     if (response.status === 200) {
-      console.log("Logout successful");
       await AsyncStorage.removeItem("token");
       navigation.navigate("LoginPage");
-    } else {
-      console.error("Logout failed:", response);
     }
-  } catch (error) {
-    console.error("Error during logout:", error);
-  }
+  } catch (error) {}
 };
