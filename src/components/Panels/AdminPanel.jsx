@@ -9,17 +9,9 @@ import profileIcon from "../../assets/img/profile.png";
 
 const Tab = createBottomTabNavigator();
 
-const HomeScreen = () => (
-  <View className="flex-1 justify-center items-center bg-gray-100">
-    <Text className="text-lg font-semibold text-indigo-500">Home Screen</Text>
-  </View>
-);
-
 const SettingsScreen = () => (
   <View className="flex-1 justify-center items-center bg-gray-100">
-    <Text className="text-lg font-semibold text-green-500">
-      Settings Screen
-    </Text>
+    <Text className="text-lg font-semibold text-green-500">Cak</Text>
   </View>
 );
 
@@ -42,19 +34,17 @@ const AdminPanel = () => {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
+          const iconSize = 28;
+
           if (route.name === "Home") {
             return (
               <Image
                 source={homeIcon}
-                style={{ width: size, height: size, tintColor: color }}
-                resizeMode="contain"
-              />
-            );
-          } else if (route.name === "Settings") {
-            return (
-              <Image
-                source={settingIcon}
-                style={{ width: size, height: size, tintColor: color }}
+                style={{
+                  width: iconSize,
+                  height: iconSize,
+                  tintColor: color,
+                }}
                 resizeMode="contain"
               />
             );
@@ -62,7 +52,23 @@ const AdminPanel = () => {
             return (
               <Image
                 source={listIcon}
-                style={{ width: size, height: size, tintColor: color }}
+                style={{
+                  width: iconSize,
+                  height: iconSize,
+                  tintColor: color,
+                }}
+                resizeMode="contain"
+              />
+            );
+          } else if (route.name === "Settings") {
+            return (
+              <Image
+                source={settingIcon}
+                style={{
+                  width: iconSize,
+                  height: iconSize,
+                  tintColor: color,
+                }}
                 resizeMode="contain"
               />
             );
@@ -70,7 +76,11 @@ const AdminPanel = () => {
             return (
               <Image
                 source={profileIcon}
-                style={{ width: size, height: size, tintColor: color }}
+                style={{
+                  width: iconSize,
+                  height: iconSize,
+                  tintColor: color,
+                }}
                 resizeMode="contain"
               />
             );
@@ -83,8 +93,8 @@ const AdminPanel = () => {
       })}
     >
       <Tab.Screen name="Home" component={DashboardScreen} />
-      <Tab.Screen name="Settings" component={SettingsScreen} />
       <Tab.Screen name="List" component={ListScreen} />
+      <Tab.Screen name="Settings" component={SettingsScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
