@@ -34,7 +34,7 @@ const AdminPanel = () => {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
-          const iconSize = 28;
+          const iconSize = 25;
 
           if (route.name === "Home") {
             return (
