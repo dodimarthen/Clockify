@@ -5,8 +5,10 @@ import ActionCard from "../Card/ActionCard";
 import SwipeToCheckIn from "../SwipeButton/SwipeButtonCheckIn";
 import SwipeToCheckOut from "../SwipeButton/SwipeButtonCheckOut";
 import AttendanceRecord from "./AttendanceRecord";
+import { useNavigation } from "@react-navigation/native";
 
 const AttendancePanel = () => {
+  const navigation = useNavigation();
   const [isCheckedIn, setIsCheckedIn] = React.useState(false);
   const [checkInTime, setCheckInTime] = React.useState(null);
   const [checkOutTime, setCheckOutTime] = React.useState(null);
@@ -23,7 +25,6 @@ const AttendancePanel = () => {
       second: "2-digit",
     });
 
-    // Compare the check-in time with 08:45:59
     if (formattedTime <= "08:45:59") {
       setCheckInMessage("On Time");
     } else {
@@ -52,8 +53,10 @@ const AttendancePanel = () => {
   };
 
   const handleViewAllPress = () => {
-    // Handle the press event here
-    console.log("View All pressed");
+    navigation.navigate("AttendanceRecordPage", {
+      checkInTime,
+      checkOutTime,
+    });
   };
 
   const [fontsLoaded] = useFonts({
@@ -124,7 +127,6 @@ const AttendancePanel = () => {
         )}
       </View>
 
-      {/* Your Activity and View All Row */}
       <View className="flex-row justify-between items-center mt-6 mx-4">
         <Text className="font-bold text-md">Your Activity</Text>
         <TouchableOpacity onPress={handleViewAllPress}>
@@ -132,11 +134,9 @@ const AttendancePanel = () => {
         </TouchableOpacity>
       </View>
 
-      {/* Attendance Record Section */}
       <View className="mt-4 mx-4">
         <AttendanceRecord
           status="Checked In"
-          // message={checkInMessage}
           date="April 17, 2024"
           time={checkInTime}
           iconSource={require("../../assets/img/login.png")}
@@ -145,14 +145,11 @@ const AttendancePanel = () => {
         <AttendanceRecord
           status="Checked Out"
           date="April 17, 2024"
-          // message={checkOutMessage}
           time={checkOutTime}
           iconSource={require("../../assets/img/logout.png")}
           bgColor="bg-custom-green"
         />
       </View>
-
-      {/* Swipe Section */}
     </>
   );
 };
