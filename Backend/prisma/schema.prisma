@@ -21,6 +21,7 @@ model User{
   role String? @db.VarChar(60)
   token String? @db.VarChar(400)
   contact Contact[]
+  attendance Attendance[]
 
   @@map("users")
 }
@@ -35,7 +36,6 @@ model Contact{
   user User @relation(fields: [username], references: [username])
   role String? @db.VarChar(60)
   addresses  Address[]
-
 
   @@map("contacts")
 }
@@ -53,4 +53,11 @@ model Address {
   @@map("addresses")
 }
 
-
+model Attendance {
+  id           Int      @id @default(autoincrement())
+  username     String
+  date         DateTime
+  checkin_time DateTime
+  checkout_time DateTime?
+  user         User     @relation(fields: [username], references: [username])
+}
