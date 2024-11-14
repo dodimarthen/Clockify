@@ -74,7 +74,7 @@ const login = async (request) => {
       role: user.role,
     },
     JWT_SECRET,
-    { algorithm: "HS256", expiresIn: "5m" }
+    { algorithm: "HS256", expiresIn: "2h" }
   );
 
   return prismaClient.user.update({
@@ -168,4 +168,42 @@ const logout = async (username) => {
   });
 };
 
-export default { register, login, get, update, logout };
+const recordAttendance = async (username, checkinTime, checkoutTime = null) => {
+  const user = await prismaClient.user.findUnique({
+    where: { username },
+  });
+
+  if (!user) {
+    throw new ResponseError(404, "User not found");
+  }
+
+  const today = new Date();
+
+  const existingAttendance = await prismaClient.attendance.findFirst({
+    where: {
+      username,
+      date: today,
+    },
+  });
+
+  if (existingAttendance) {
+    return prismaClient.attendance.update({
+      where: {
+        id: existingAttendance.id,
+      },
+      data: {
+        checkout_time: checkoutTime,
+      },
+    });
+  } else {
+    return prismaClient.attendance.create({
+      data: {
+        username,
+        checkin_time: checkinTime,
+        date: today,
+      },
+    });
+  }
+};
+
+export default { register, login, get, update, logout, recordAttendance };

@@ -1,4 +1,5 @@
 import userService from "../service/user-service.js";
+import { attendanceValidation } from "../validation/user-validation.js";
 
 const register = async (req, res, next) => {
   try {
@@ -48,6 +49,7 @@ const update = async (req, res, next) => {
     next(e);
   }
 };
+
 const logout = async (req, res, next) => {
   try {
     await userService.logout(req.user.username);
@@ -57,4 +59,25 @@ const logout = async (req, res, next) => {
   }
 };
 
-export default { register, login, get, update, logout };
+const recordAttendance = async (req, res, next) => {
+  try {
+    const { checkinTime, checkoutTime } = req.body;
+
+    const username = req.user.username;
+
+    const result = await userService.recordAttendance(
+      username,
+      checkinTime,
+      checkoutTime
+    );
+
+    res.status(200).json({
+      message: "Attendance recorded successfully",
+      data: result,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
+export default { register, login, get, update, logout, recordAttendance };
