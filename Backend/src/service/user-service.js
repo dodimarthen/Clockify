@@ -11,6 +11,10 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
+import {
+  checkinValidation,
+  checkoutValidation,
+} from "../validation/user-validation.js";
 
 const JWT_SECRET = process.env.EXPO_JWT_SECRET;
 
@@ -74,7 +78,7 @@ const login = async (request) => {
       role: user.role,
     },
     JWT_SECRET,
-    { algorithm: "HS256", expiresIn: "2h" }
+    { algorithm: "HS256", expiresIn: "24h" }
   );
 
   return prismaClient.user.update({
@@ -168,7 +172,22 @@ const logout = async (username) => {
   });
 };
 
-const recordAttendance = async (username, checkinTime, checkoutTime = null) => {
+const recordAttendance = async (
+  username,
+  checkinTime = null,
+  checkoutTime = null
+) => {
+  try {
+    if (checkinTime) {
+      await checkinValidation.validate({ checkinTime });
+    }
+    if (checkoutTime) {
+      await checkoutValidation.validate({ checkoutTime });
+    }
+  } catch (error) {
+    throw new ResponseError(400, error.message);
+  }
+
   const user = await prismaClient.user.findUnique({
     where: { username },
   });
@@ -177,7 +196,7 @@ const recordAttendance = async (username, checkinTime, checkoutTime = null) => {
     throw new ResponseError(404, "User not found");
   }
 
-  const today = new Date();
+  const today = new Date().toISOString().split("T")[0] + "T00:00:00.000Z";
 
   const existingAttendance = await prismaClient.attendance.findFirst({
     where: {
@@ -187,22 +206,37 @@ const recordAttendance = async (username, checkinTime, checkoutTime = null) => {
   });
 
   if (existingAttendance) {
-    return prismaClient.attendance.update({
-      where: {
-        id: existingAttendance.id,
-      },
-      data: {
-        checkout_time: checkoutTime,
-      },
-    });
-  } else {
+    if (existingAttendance.checkout_time === null && checkoutTime) {
+      return prismaClient.attendance.update({
+        where: {
+          id: existingAttendance.id,
+        },
+        data: {
+          checkout_time: checkoutTime,
+        },
+      });
+    } else if (existingAttendance.checkout_time !== null) {
+      throw new ResponseError(400, "User has already checked out today.");
+    } else {
+      throw new ResponseError(
+        400,
+        "Check-out time is required for this entry."
+      );
+    }
+  } else if (checkinTime) {
     return prismaClient.attendance.create({
       data: {
         username,
         checkin_time: checkinTime,
         date: today,
+        checkout_time: null,
       },
     });
+  } else {
+    throw new ResponseError(
+      400,
+      "Check-in time is required to create an attendance record."
+    );
   }
 };
 

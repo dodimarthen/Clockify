@@ -21,8 +21,11 @@ const updateUserValidation = Joi.object({
   name: Joi.string().max(100).optional(),
 });
 
-const attendanceValidation = Joi.object({
+const checkinValidation = Joi.object({
   checkinTime: Joi.date().required(),
+});
+
+const checkoutValidation = Joi.object({
   checkoutTime: Joi.date().optional(),
 });
 
@@ -31,5 +34,6 @@ export {
   loginUserValidation,
   getUserValidation,
   updateUserValidation,
-  attendanceValidation,
+  checkinValidation,
+  checkoutValidation,
 };
