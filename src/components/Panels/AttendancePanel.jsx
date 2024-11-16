@@ -68,6 +68,13 @@ const AttendancePanel = () => {
     return null;
   }
 
+  const currentDate = new Date();
+  const formattedDate = currentDate.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
   return (
     <>
       <View className="flex-row flex-wrap justify-between p-4 mt-1 mr-6 ml-2">
@@ -137,14 +144,14 @@ const AttendancePanel = () => {
       <View className="mt-4 mx-4">
         <AttendanceRecord
           status="Checked In"
-          date="April 17, 2024"
+          date={formattedDate}
           time={checkInTime}
           iconSource={require("../../assets/img/login.png")}
           bgColor="bg-panel-checkedin"
         />
         <AttendanceRecord
           status="Checked Out"
-          date="April 17, 2024"
+          date={formattedDate}
           time={checkOutTime}
           iconSource={require("../../assets/img/logout.png")}
           bgColor="bg-custom-green"
