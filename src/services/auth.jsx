@@ -1,6 +1,20 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+export const getToken = async () => {
+  try {
+    const token = await AsyncStorage.getItem("token");
+    if (!token) {
+      console.error("No token found");
+      return null;
+    }
+    return token;
+  } catch (error) {
+    console.error("Error getting token:", error);
+    return null;
+  }
+};
+
 export const getCurrentUser = async () => {
   try {
     const token = await AsyncStorage.getItem("token");
@@ -69,7 +83,7 @@ export const handleLogin = async (
         ) {
           navigation.navigate("AdminPanel");
         } else {
-          navigation.navigate("Dashboard");
+          navigation.navigate("UserPanel");
         }
       } else {
         setLoginError("Unable to fetch user details.");
