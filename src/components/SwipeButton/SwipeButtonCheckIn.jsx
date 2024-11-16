@@ -1,7 +1,8 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { View, Text, Animated, PanResponder, Image } from "react-native";
 import { useFonts } from "expo-font";
 import CheckModal from "../Modal/Modal";
+import { getToken } from "../../services/auth";
 
 const SwipeToCheckIn = ({ setCheckInTime, setIsCheckedIn }) => {
   const [fontsLoaded] = useFonts({
@@ -12,6 +13,15 @@ const SwipeToCheckIn = ({ setCheckInTime, setIsCheckedIn }) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const pan = useRef(new Animated.ValueXY()).current;
   const opacity = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      const token = await getToken();
+      console.log("Token:", token);
+    };
+
+    fetchToken();
+  }, []);
 
   const panResponder = useRef(
     PanResponder.create({
